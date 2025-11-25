@@ -962,7 +962,7 @@ const TeacherRegistrationComponent: React.FC = () => {
               </div>
 
               {/* Documents Required */}
-              <DocumentsRequiredComponent
+              {/* <DocumentsRequiredComponent
                 control={control}
                 errors={errors.documentsSelected}
                 options={[
@@ -972,7 +972,7 @@ const TeacherRegistrationComponent: React.FC = () => {
                 ]}
                 title="Documents Required"
                 name="documentsSelected"
-              />
+              /> */}
 
               {/* Teacher Eligibility Criteria */}
               <AcknowledgmentCheckbox

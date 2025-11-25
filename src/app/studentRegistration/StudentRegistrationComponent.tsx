@@ -799,7 +799,7 @@ const StudentRegistrationComponent: React.FC = () => {
               </div>
 
               {/* Documents Required */}
-              <DocumentsRequiredComponent
+              {/* <DocumentsRequiredComponent
                 control={control}
                 errors={errors.documents}
                 options={[
@@ -809,7 +809,7 @@ const StudentRegistrationComponent: React.FC = () => {
                   { value: 'vaccinationRecord', label: 'Vaccination Record' }
                 ]}
                 title="Documents Required"
-              />
+              /> */}
   
               {/* Declaration by Parent / Guardian */}
               <div>
