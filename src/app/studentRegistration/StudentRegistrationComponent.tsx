@@ -338,8 +338,8 @@ const StudentRegistrationComponent: React.FC = () => {
   }, [watch]);
 
   // Helper function to update both form and local state
-  const updateFormField = (name: keyof StudentRegistrationFormData, value: any) => {
-    setValue(name, value);
+  const updateFormField = (name: keyof StudentRegistrationFormData, value: string | boolean | StudentDocument[] | null | undefined) => {
+    setValue(name, value ?? undefined);
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
@@ -415,7 +415,7 @@ const StudentRegistrationComponent: React.FC = () => {
               {/* Child's Information Section */}
               <div>
                 <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
-                  1. Child's Information
+                  1. Child&apos;s Information
                 </h2>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
                   {/* Full Name */}
@@ -490,7 +490,7 @@ const StudentRegistrationComponent: React.FC = () => {
                   {/* Father's Details */}
                   <div className='w-full md:w-1/2'>
                     <h3 className='text-base sm:text-lg font-bold text-gray-900 mb-1.5'>
-                      • Father's Details
+                      • Father&apos;s Details
                     </h3>
                     <div className='space-y-2 w-full'>
                       {/* Father's Name */}
@@ -542,7 +542,7 @@ const StudentRegistrationComponent: React.FC = () => {
 
                   {/* Mother's Details */}
                   <div className='w-full md:w-1/2'>
-                    <h3 className='text-base sm:text-lg font-bold text-gray-900 mb-1.5'>• Mother's Details</h3>
+                    <h3 className='text-base sm:text-lg font-bold text-gray-900 mb-1.5'>• Mother&apos;s Details</h3>
                     <div className='space-y-2 w-full'>
                       {/* Mother's Name */}
                       <TextInput

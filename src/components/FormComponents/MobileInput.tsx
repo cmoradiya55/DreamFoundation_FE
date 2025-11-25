@@ -6,7 +6,6 @@ import { Phone, AlertCircle } from 'lucide-react';
 
 interface MobileInputProps {
   name: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any>;
   label: string;
   required?: boolean;
