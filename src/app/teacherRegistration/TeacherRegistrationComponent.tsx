@@ -335,7 +335,7 @@ const TeacherRegistrationComponent: React.FC = () => {
       console.log('Form values before processing:', data);
 
       // Check for duplicate qualifications
-      const qualificationValues = data.educationalQualifications.map(q => q.qualification);
+      const qualificationValues: string[] = data.educationalQualifications.map(q => q.qualification);
       const uniqueQualifications = new Set(qualificationValues.filter(Boolean));
 
       if (uniqueQualifications.size !== qualificationValues.filter(Boolean).length) {

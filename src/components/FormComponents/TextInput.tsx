@@ -6,7 +6,6 @@ import { AlertCircle } from 'lucide-react';
 
 interface TextInputProps {
   name: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any>;
   label: string;
   placeholder?: string;
