@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
       });
 
       if (emailResponse.ok) {
-        console.log('Event registration emails sent successfully');
+        console.log('Event registration emails sent successfully!');
       } else {
         console.error('Error sending event registration emails');
       }
