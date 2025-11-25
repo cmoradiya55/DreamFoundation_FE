@@ -10,7 +10,6 @@ interface RadioOption {
 
 interface RadioInputProps {
   name: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any>;
   label: string;
   options: RadioOption[];

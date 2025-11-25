@@ -223,9 +223,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({ name, control, docTyp
 };
 
 interface DocumentsRequiredComponentProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   errors: any;
   options: DocumentOption[];
   title?: string;
