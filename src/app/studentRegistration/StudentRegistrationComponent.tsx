@@ -799,17 +799,17 @@ const StudentRegistrationComponent: React.FC = () => {
               </div>
 
               {/* Documents Required */}
-              {/* <DocumentsRequiredComponent
+              <DocumentsRequiredComponent
                 control={control}
                 errors={errors.documents}
                 options={[
                   { value: 'birthCertificate', label: 'Birth Certificate' },
-                  { value: 'passportSizePhoto', label: 'Recent Passport Size Photo (2)' },
-                  { value: 'addressProof', label: 'Address Proof' },
-                  { value: 'vaccinationRecord', label: 'Vaccination Record' }
+                  { value: 'passportSizePhoto', label: 'Recent Passport Size Photo' },
+                  { value: 'childAadharCard', label: 'Child\'s Aadhar Card' },
+                  { value: 'parentAadharCard', label: 'Parents\'s Aadhar Card' }
                 ]}
                 title="Documents Required"
-              /> */}
+              />
   
               {/* Declaration by Parent / Guardian */}
               <div>

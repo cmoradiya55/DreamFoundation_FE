@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Control, FieldError, useWatch, Controller } from 'react-hook-form';
 import { FileText, Image as ImageIcon, X, Camera, FileTextIcon } from 'lucide-react';
+import { upoadFile } from '@/lib/presignedUrl';
 
 interface DocumentOption {
   value: string;
@@ -13,12 +14,15 @@ interface FileUploadFieldProps {
   name: string;
   control: Control<any>;
   docType: string;
+  uploadModule: string;
 }
 
-const FileUploadField: React.FC<FileUploadFieldProps> = ({ name, control, docType }) => {
+const FileUploadField: React.FC<FileUploadFieldProps> = ({ name, control, docType, uploadModule }) => {
   const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [isMobileDevice, setIsMobileDevice] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isRequestingPresign, setIsRequestingPresign] = useState(false);
+  const [presignError, setPresignError] = useState<string | null>(null);
   const watchedValue = useWatch({ control, name });
 
   // Detect mobile/tablet devices
@@ -59,10 +63,26 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({ name, control, docTyp
         const isImageFile = Boolean(file?.type?.startsWith('image/'));
         const shouldShowImagePreview = Boolean(fileUrl && (isImageFile || !file?.type));
 
-        const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
           const selectedFile = e.target.files?.[0];
           if (selectedFile) {
             setIsDragging(false);
+            setPresignError(null);
+            const contentType = selectedFile.type || 'application/octet-stream';
+
+            try {
+              setIsRequestingPresign(true);
+              const presignResponse = await upoadFile(selectedFile, uploadModule, (percent) => {
+                console.log(`Upload progress: ${percent}%`);
+              });
+
+            } catch (error) {
+              console.error('Failed to obtain presigned URL', error);
+              setPresignError('Unable to prepare upload. Please try again.');
+            } finally {
+              setIsRequestingPresign(false);
+            }
+
             onChange(selectedFile);
           }
           // Reset input value to allow selecting the same file again
@@ -118,6 +138,11 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({ name, control, docTyp
 
         return (
           <div className="space-y-3">
+            {presignError && (
+              <p className="text-sm text-red-600" role="alert">
+                {presignError}
+              </p>
+            )}
             {!file ? (
               <div className="flex flex-col lg:flex-row gap-3">
                 {/* Single Upload Button with Drag and Drop - accepts both Image and Document */}
@@ -128,6 +153,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({ name, control, docTyp
                     onChange={handleFileChange}
                     className="hidden"
                     id={`file-${docType}`}
+                    disabled={isRequestingPresign}
                   />
                   <div
                     onDragOver={handleDragOver}
@@ -137,16 +163,18 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({ name, control, docTyp
                       isDragging && !isMobileDevice
                         ? 'bg-teal-100 border-teal-500 border-solid scale-105'
                         : 'border-teal-300 hover:bg-teal-100 hover:border-teal-400'
-                    }`}
+                    } ${isRequestingPresign ? 'opacity-70 cursor-wait' : ''}`}
                   >
                     <div className="flex items-center gap-2">
                       {/* <ImageIcon className="w-6 h-6 text-teal-700" /> */}
                       <FileTextIcon className="w-6 h-6 text-teal-700" />
                     </div>
                     <span className="text-sm font-medium text-teal-700">
-                      {isDragging && !isMobileDevice
-                        ? 'Drop file here'
-                        : 'Upload Image or Document'}
+                      {isRequestingPresign
+                        ? 'Preparing secure upload...'
+                        : isDragging && !isMobileDevice
+                          ? 'Drop file here'
+                          : 'Upload Image or Document'}
                     </span>
                     {!isMobileDevice && (
                       <span className="text-xs text-teal-600 -mt-1">
@@ -228,6 +256,7 @@ interface DocumentsRequiredComponentProps {
   options: DocumentOption[];
   title?: string;
   name?: string;
+  uploadModule?: string;
 }
 
 const DocumentsRequiredComponent: React.FC<DocumentsRequiredComponentProps> = ({
@@ -236,6 +265,7 @@ const DocumentsRequiredComponent: React.FC<DocumentsRequiredComponentProps> = ({
   options,
   title = 'Documents Required',
   name = 'documents',
+  uploadModule = 'students',
 }) => {
   return (
     <div>
@@ -292,6 +322,7 @@ const DocumentsRequiredComponent: React.FC<DocumentsRequiredComponentProps> = ({
                             name={uploadFieldName}
                             control={control}
                             docType={option.value}
+                            uploadModule={uploadModule}
                           />
                         </div>
                       )}

@@ -38,7 +38,7 @@ const Hero = () => {
     // Auto slide functionality with setTimeout
 
 
-    const [activeGallery, setActiveGallery] = useState<number>(2);
+    const [activeGallery, setActiveGallery] = useState<number>(4);
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState(0);
     const router = useRouter();
@@ -90,7 +90,7 @@ const Hero = () => {
     // }, [currentImageIndex, concertImage.length]);
 
     // const currentGalleryImages = activeGallery == 1 ? concertImage : (activeGallery === 2 ? helixImages : tinyYatraImages);
-    const currentGalleryImages = (activeGallery === 2 ? helixImages : tinyYatraImages);
+    const currentGalleryImages = activeGallery === 2 ? helixImages : activeGallery === 3 ? tinyYatraImages : helixImages;
 
     const openLightbox = (index: number) => {
         setLightboxIndex(index);
@@ -110,10 +110,9 @@ const Hero = () => {
     };
 
     const tabButtonClasses = (isActive: boolean) =>
-        `px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 rounded-full font-semibold text-sm sm:text-base lg:text-lg shadow-md transition-all duration-300 ${
-            isActive
-                ? 'bg-gradient-to-r from-[#042f2e] to-[#55a976] text-white'
-                : 'bg-white text-zinc-700 hover:-translate-y-0.5 hover:shadow-lg'
+        `px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 rounded-full font-semibold text-sm sm:text-base lg:text-lg shadow-md transition-all duration-300 ${isActive
+            ? 'bg-gradient-to-r from-[#042f2e] to-[#55a976] text-white'
+            : 'bg-white text-zinc-700 hover:-translate-y-0.5 hover:shadow-lg'
         }`;
 
     const featureCardClasses =
@@ -126,6 +125,12 @@ const Hero = () => {
                     <div className="max-w-6xl mx-auto px-4 sm:px-6">
                         <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-6 md:mb-10">
                             <button
+                                className={tabButtonClasses(activeGallery === 4)}
+                                onClick={() => setActiveGallery(4)}
+                            >
+                                Women’s Health Camp
+                            </button>
+                            <button
                                 className={tabButtonClasses(activeGallery === 2)}
                                 onClick={() => setActiveGallery(2)}
                             >
@@ -137,26 +142,49 @@ const Hero = () => {
                             >
                                 Tiny Yatra
                             </button>
+
                         </div>
 
-                        <div className="grid gap-4 sm:gap-6 lg:gap-8 grid-cols-[repeat(auto-fit,minmax(220px,1fr))]">
-                            {currentGalleryImages.map((image, index) => (
-                                <div
-                                    key={image}
-                                    className={`relative overflow-hidden rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] cursor-pointer transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(0,0,0,0.2)] ${
-                                        activeGallery === 3 ? 'aspect-[3/3]' : 'aspect-[4/3]'
-                                    }`}
-                                    onClick={() => openLightbox(index)}
-                                >
+                        {activeGallery === 4 ? (
+                            <div className="space-y-6">
+                                <div className="relative min-h-[420px] md:min-h-[520px] lg:min-h-[740px] overflow-hidden rounded-3xl">
                                     <Image
-                                        src={image}
-                                        alt={`${activeGallery === 2 ? 'Helix Academy' : 'Tiny Yatra'} image ${index + 1}`}
+                                        src="/images/WomenHealthCamp/WomenHealthCamp.webp"
+                                        alt="Women’s Health Camp attendees"
                                         fill
-                                        className="object-cover transition-transform duration-300 hover:scale-105"
+                                        className="object-contain"
+                                        sizes="(max-width: 1024px) 100vw, 960px"
+                                        priority
                                     />
                                 </div>
-                            ))}
-                        </div>
+                                <div className="flex justify-center">
+                                    <button
+                                        className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#042f2e] to-[#55a976] px-8 py-4 text-sm font-semibold uppercase tracking-wide text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl mt-6"
+                                        onClick={() => router.push('/womensHealthCamp')}
+                                    >
+                                        Register for the Camp
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="grid gap-4 sm:gap-6 lg:gap-8 grid-cols-[repeat(auto-fit,minmax(220px,1fr))]">
+                                {currentGalleryImages.map((image, index) => (
+                                    <div
+                                        key={image}
+                                        className={`relative overflow-hidden rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] cursor-pointer transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(0,0,0,0.2)] ${activeGallery === 3 ? 'aspect-[3/3]' : 'aspect-[4/3]'
+                                            }`}
+                                        onClick={() => openLightbox(index)}
+                                    >
+                                        <Image
+                                            src={image}
+                                            alt={`${activeGallery === 2 ? 'Helix Academy' : 'Tiny Yatra'} image ${index + 1}`}
+                                            fill
+                                            className="object-cover transition-transform duration-300 hover:scale-105"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </section>
 
@@ -172,7 +200,7 @@ const Hero = () => {
                             <div className="grid gap-4 sm:gap-6 lg:gap-8 mt-8 md:mt-10 md:grid-cols-3">
                                 <div className={featureCardClasses}>
                                     <h3 className="text-lg sm:text-xl font-semibold text-[#115e59] mb-2 sm:mb-3">Quality Education</h3>
-                                        <p className="text-sm sm:text-base text-[#0f766e] leading-1.3 sm:leading-1.5 md:leading-6 lg:leading-relaxed">
+                                    <p className="text-sm sm:text-base text-[#0f766e] leading-1.3 sm:leading-1.5 md:leading-6 lg:leading-relaxed">
                                         Comprehensive educational programs designed to meet diverse learning needs.
                                     </p>
                                 </div>
