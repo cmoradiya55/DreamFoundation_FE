@@ -11,17 +11,16 @@ export interface EducationalQualificationInput {
   boardUniversityName: string;
   year?: number | null;
   percentageOrGrade?: string | null;
-  subjectsTaught?: string | null;
+  subjectsTaught: string;
 }
 
 export interface TeachingExperienceInput {
-  totalExperienceInYears?: number | null;
-  totalExperienceInMonths?: number | null;
+  totalExperienceInYears?: string | null;
+  totalExperienceInMonths?: string | null;
   previousSchoolName: string;
   designation: string;
   fromDate: string;
   toDate: string;
-  subjectsTaught?: string | null;
 }
 
 export interface CreateTeacherRegistrationDto {

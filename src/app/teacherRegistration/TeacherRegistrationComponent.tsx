@@ -51,7 +51,7 @@ export interface FormData {
   pincode: string;
   documents: TeacherDocumentUploadInput[];
   documentsSelected: string[];
-  documentFiles: Record<string, File | null>;
+  documentFiles: Record<string, File | { file: File; url: string } | { front?: File | { file: File; url: string }, back?: File | { file: File; url: string } } | null>;
   hasBasicComputerKnowledge: string;
   knowMSOffice: string;
   knowOnlineTeachingTools: string;
@@ -133,15 +133,6 @@ const formDataInitial: FormData = {
   ],
 }
 
-const fileToBase64 = (file: File): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = () => reject(new Error('Failed to read file'));
-    reader.readAsDataURL(file);
-  });
-};
-
 const parseNumberField = (value: string | number, label: string) => {
   if (value === null || value === undefined || value === '') {
     throw new Error(`${label} is required.`);
@@ -169,9 +160,9 @@ const toNullableString = (value?: string | null) => {
 };
 
 const normalizeGender = (value: string): CreateTeacherRegistrationDto['gender'] => {
-  const normalized = value?.toUpperCase();
-  if (!normalized) {
-    throw new Error('Please select a gender before submitting the form.');
+  const normalized = value?.toLowerCase();
+  if (!normalized || !['male', 'female', 'other'].includes(normalized)) {
+    throw new Error('Please select a valid gender before submitting the form.');
   }
   return normalized;
 };
@@ -207,16 +198,15 @@ const buildTeacherRegistrationInput = (
       boardUniversityName: qualification.boardUniversity?.trim() || '',
       year: parseOptionalNumber(qualification.year),
       percentageOrGrade: toNullableString(qualification.percentageGrade) ?? null,
-      subjectsTaught: null,
+      subjectsTaught: '', // Required non-nullable field, set to empty string
     })),
     teachingExperiences: data.teachingExperiences.map((experience) => ({
-      totalExperienceInYears: parseOptionalNumber(experience.totalExperienceYears),
-      totalExperienceInMonths: parseOptionalNumber(experience.totalExperienceMonths),
+      totalExperienceInYears: experience.totalExperienceYears?.trim() || null,
+      totalExperienceInMonths: experience.totalExperienceMonths?.trim() || null,
       previousSchoolName: experience.previousSchoolName?.trim() || '',
       designation: experience.positionHeld?.trim() || '',
       fromDate: experience.fromDate,
       toDate: experience.toDate,
-      subjectsTaught: toNullableString(experience.subjectsGradesTaught) ?? null,
     })),
   };
 };
@@ -357,7 +347,24 @@ const TeacherRegistrationComponent: React.FC = () => {
       }
 
       const documentFiles = data.documentFiles ?? {};
-      const missingDocuments = selectedDocuments.filter((docType) => !documentFiles?.[docType]);
+      
+      // Check for missing documents (handle Aadhar cards separately)
+      const missingDocuments: string[] = [];
+      for (const docType of selectedDocuments) {
+        if (docType === 'teacherAadharCard') {
+          const aadharData = documentFiles[docType];
+          const hasFront = aadharData && typeof aadharData === 'object' && 'front' in aadharData && aadharData.front;
+          const hasBack = aadharData && typeof aadharData === 'object' && 'back' in aadharData && aadharData.back;
+          if (!hasFront || !hasBack) {
+            missingDocuments.push(docType);
+          }
+        } else {
+          if (!documentFiles[docType]) {
+            missingDocuments.push(docType);
+          }
+        }
+      }
+      
       if (missingDocuments.length > 0) {
         alert(`Please upload files for: ${missingDocuments.join(', ')}`);
         return;
@@ -365,20 +372,83 @@ const TeacherRegistrationComponent: React.FC = () => {
 
       const documentsPayload: FormData['documents'] = [];
       for (const docType of selectedDocuments) {
-        const file = documentFiles[docType];
-        if (!file) {
-          continue;
+        if (docType === 'teacherAadharCard') {
+          // Handle teacher Aadhar card with front and back
+          const aadharData = documentFiles[docType];
+          const frontData = aadharData && typeof aadharData === 'object' && 'front' in aadharData ? aadharData.front : null;
+          const backData = aadharData && typeof aadharData === 'object' && 'back' in aadharData ? aadharData.back : null;
+
+          if (frontData) {
+            const fileUrl = typeof frontData === 'object' && frontData !== null && 'url' in frontData 
+              ? (frontData as { file: File; url: string }).url 
+              : null;
+            if (fileUrl) {
+              documentsPayload.push({
+                documentType: 'teacherAadharCardFront',
+                documentURL: fileUrl,
+              });
+            }
+          }
+
+          if (backData) {
+            const fileUrl = typeof backData === 'object' && backData !== null && 'url' in backData 
+              ? (backData as { file: File; url: string }).url 
+              : null;
+            if (fileUrl) {
+              documentsPayload.push({
+                documentType: 'teacherAadharCardBack',
+                documentURL: fileUrl,
+              });
+            }
+          }
+        } else {
+          // Handle regular documents (single file)
+          const fileData = documentFiles[docType];
+          if (fileData) {
+            const fileUrl = typeof fileData === 'object' && fileData !== null && 'url' in fileData 
+              ? (fileData as { file: File; url: string }).url 
+              : null;
+            if (fileUrl) {
+              documentsPayload.push({
+                documentType: docType,
+                documentURL: fileUrl,
+              });
+            }
+          }
         }
-        const documentURL = await fileToBase64(file as File);
-        documentsPayload.push({
-          documentType: docType,
-          documentURL,
-        });
       }
+
+      // Reorder documents according to the specified sequence
+      const documentOrder = [
+        'passportSizePhoto',
+        'teacherAadharCardFront',
+        'teacherAadharCardBack'
+      ];
+
+      const orderedDocuments: TeacherDocumentUploadInput[] = [];
+      const unorderedDocuments: TeacherDocumentUploadInput[] = [];
+
+      // First, add documents in the specified order
+      for (const docType of documentOrder) {
+        const doc = documentsPayload.find(d => d.documentType === docType);
+        if (doc) {
+          orderedDocuments.push(doc);
+        }
+      }
+
+      // Then, add any remaining documents that weren't in the order list
+      for (const doc of documentsPayload) {
+        if (!documentOrder.includes(doc.documentType)) {
+          unorderedDocuments.push(doc);
+        }
+      }
+
+      // Combine ordered and unordered documents
+      const finalDocumentsPayload = [...orderedDocuments, ...unorderedDocuments];
 
       const submissionPayload: FormData = {
         ...data,
-        documents: documentsPayload,
+        documents: finalDocumentsPayload,
       };
 
       const mutationInput = buildTeacherRegistrationInput(submissionPayload);
@@ -962,17 +1032,16 @@ const TeacherRegistrationComponent: React.FC = () => {
               </div>
 
               {/* Documents Required */}
-              {/* <DocumentsRequiredComponent
+              <DocumentsRequiredComponent
                 control={control}
                 errors={errors.documentsSelected}
                 options={[
-                  { value: 'resume', label: 'Resume/CV (In PDF Format)' },
-                  { value: 'passportSizePhoto', label: 'Recent Passport Size Photo' },
-                  { value: 'certificates', label: 'Certificates (Qualification + Experience)' },
+                  { value: 'passportSizePhoto', label: 'Passport Size Photo' },
+                  { value: 'teacherAadharCard', label: 'Teacher\'s Aadhar Card' },
                 ]}
                 title="Documents Required"
                 name="documentsSelected"
-              /> */}
+              />
 
               {/* Teacher Eligibility Criteria */}
               <AcknowledgmentCheckbox
