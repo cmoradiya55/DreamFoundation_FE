@@ -1,19 +1,16 @@
 import { graphQLRequest, GraphQLRequestOptions } from '@/lib/graphqlClient';
 
-export interface CreateWomensHealthCampRegistrationDto {
+export interface CreateWomenHealthCheckUpEventInput {
   fullName: string;
   spouseName: string;
-  mobileCountryCode: number;
+  countryCode: number;
   mobile: number;
   email: string;
-  donationAmount?: number | null;
+  donationAmount: number;
 }
 
-interface CreateWomensHealthCampRegistrationResult {
-  createWomensHealthCampRegistration: {
-    id: string;
-    registrationNumber?: string | null;
-  };
+interface CreateWomenHealthCheckUpEventResult {
+  createWomenHealthCheckUpEvent: boolean;
 }
 
 type GraphQLRequestOverrides = Pick<
@@ -21,26 +18,23 @@ type GraphQLRequestOverrides = Pick<
   'headers' | 'authToken' | 'timeoutMs' | 'endpoint'
 >;
 
-export const CREATE_WOMENS_HEALTH_CAMP_REGISTRATION_MUTATION = /* GraphQL */ `
-  mutation CreateWomensHealthCampRegistration($input: CreateWomensHealthCampRegistrationDto!) {
-    createWomensHealthCampRegistration(createWomensHealthCampRegistrationDto: $input) {
-      id
-      registrationNumber
-    }
+export const CREATE_WOMEN_HEALTH_CHECKUP_EVENT_MUTATION = /* GraphQL */ `
+  mutation CreateWomenHealthCheckUpEvent($input: CreateWomenHealthCheckUpEventInput!) {
+    createWomenHealthCheckUpEvent(input: $input)
   }
 `;
 
-export const CreateWomensHealthCampRegistrationMutation = async (
-  input: CreateWomensHealthCampRegistrationDto,
+export const CreateWomenHealthCheckupEventMutation = async (
+  input: CreateWomenHealthCheckUpEventInput,
   overrides?: GraphQLRequestOverrides,
 ) => {
-  const data = await graphQLRequest<CreateWomensHealthCampRegistrationResult>({
-    query: CREATE_WOMENS_HEALTH_CAMP_REGISTRATION_MUTATION,
+  const data = await graphQLRequest<CreateWomenHealthCheckUpEventResult>({
+    query: CREATE_WOMEN_HEALTH_CHECKUP_EVENT_MUTATION,
     variables: { input },
     ...overrides,
   });
 
-  return data.createWomensHealthCampRegistration;
+  return data.createWomenHealthCheckUpEvent;
 };
 
 

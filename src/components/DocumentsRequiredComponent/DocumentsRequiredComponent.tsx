@@ -42,8 +42,13 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({ name, control, docTyp
 
   // Update file URL when file changes
   useEffect(() => {
-    const file = watchedValue as File | null;
-    if (file) {
+    const fileData = watchedValue as File | { file: File; url: string } | null;
+    const file = fileData instanceof File ? fileData : fileData?.file || null;
+    const storedUrl = fileData && !(fileData instanceof File) ? fileData.url : null;
+    
+    if (storedUrl) {
+      setFileUrl(storedUrl);
+    } else if (file) {
       const url = URL.createObjectURL(file);
       setFileUrl(url);
       return () => {
@@ -59,9 +64,13 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({ name, control, docTyp
       name={name}
       control={control}
       render={({ field: { onChange, value } }) => {
-        const file = value as File | null;
+        // Handle both File object (legacy) and { file, url } object (new)
+        const fileData = value as File | { file: File; url: string } | null;
+        const file = fileData instanceof File ? fileData : fileData?.file || null;
+        const fileUrlFromValue = fileData && !(fileData instanceof File) ? fileData.url : null;
+        const displayUrl = fileUrl || fileUrlFromValue;
         const isImageFile = Boolean(file?.type?.startsWith('image/'));
-        const shouldShowImagePreview = Boolean(fileUrl && (isImageFile || !file?.type));
+        const shouldShowImagePreview = Boolean(displayUrl && (isImageFile || !file?.type));
 
         const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
           const selectedFile = e.target.files?.[0];
@@ -72,18 +81,18 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({ name, control, docTyp
 
             try {
               setIsRequestingPresign(true);
-              const presignResponse = await upoadFile(selectedFile, uploadModule, (percent) => {
+              const fileUrl = await upoadFile(selectedFile, uploadModule, (percent) => {
                 console.log(`Upload progress: ${percent}%`);
               });
 
+              // Store both file and URL as an object
+              onChange({ file: selectedFile, url: fileUrl });
             } catch (error) {
               console.error('Failed to obtain presigned URL', error);
               setPresignError('Unable to prepare upload. Please try again.');
             } finally {
               setIsRequestingPresign(false);
             }
-
-            onChange(selectedFile);
           }
           // Reset input value to allow selecting the same file again
           e.target.value = '';
@@ -122,7 +131,19 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({ name, control, docTyp
               ];
               const isDocumentFile = allowedDocumentTypes.includes(droppedFile.type);
               if (isImageFile || isDocumentFile) {
-                onChange(droppedFile);
+                // For drag and drop, we'll upload the file
+                setIsRequestingPresign(true);
+                setPresignError(null);
+                upoadFile(droppedFile, uploadModule, (percent) => {
+                  console.log(`Upload progress: ${percent}%`);
+                }).then((url) => {
+                  onChange({ file: droppedFile, url });
+                  setIsRequestingPresign(false);
+                }).catch((error) => {
+                  console.error('Failed to upload dropped file', error);
+                  setPresignError('Unable to upload file. Please try again.');
+                  setIsRequestingPresign(false);
+                });
               }
             }
           }
@@ -211,7 +232,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({ name, control, docTyp
                 {shouldShowImagePreview ? (
                   <div className="relative w-20 h-20 flex-shrink-0">
                     <img
-                      src={fileUrl ?? ''}
+                      src={displayUrl ?? (file ? URL.createObjectURL(file) : '')}
                       alt="Preview"
                       className="w-full h-full object-cover rounded-lg"
                     />
@@ -318,12 +339,40 @@ const DocumentsRequiredComponent: React.FC<DocumentsRequiredComponentProps> = ({
                       {/* Upload section appears directly below the selected option */}
                       {isChecked && (
                         <div className="ml-7 mt-2 mb-4 bg-white rounded-xl border-2 border-teal-100 p-4 sm:p-5 shadow-sm">
-                          <FileUploadField
-                            name={uploadFieldName}
-                            control={control}
-                            docType={option.value}
-                            uploadModule={uploadModule}
-                          />
+                          {/* For Aadhar cards, show two upload fields: front and back */}
+                          {(option.value === 'childAadharCard' || option.value === 'parentAadharCard' || option.value === 'teacherAadharCard') ? (
+                            <div className="space-y-4 flex lg:gap-4 gap-2 lg:flex-row flex-col">
+                              <div className="lg:w-1/2 w-full">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                  Front Side
+                                </label>
+                                <FileUploadField
+                                  name={`${uploadFieldName}.front`}
+                                  control={control}
+                                  docType={`${option.value}_front`}
+                                  uploadModule={uploadModule}
+                                />
+                              </div>
+                              <div className="lg:w-1/2 w-full">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                  Back Side
+                                </label>
+                                <FileUploadField
+                                  name={`${uploadFieldName}.back`}
+                                  control={control}
+                                  docType={`${option.value}_back`}
+                                  uploadModule={uploadModule}
+                                />
+                              </div>
+                            </div>
+                          ) : (
+                            <FileUploadField
+                              name={uploadFieldName}
+                              control={control}
+                              docType={option.value}
+                              uploadModule={uploadModule}
+                            />
+                          )}
                         </div>
                       )}
                     </div>

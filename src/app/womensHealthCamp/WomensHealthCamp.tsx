@@ -7,8 +7,8 @@ import { HeartHandshake, Mail, User } from 'lucide-react';
 import { MobileInput, TextInput } from '@/components/FormComponents';
 import { GraphQLClientError } from '@/lib/graphqlClient';
 import {
-    CreateWomensHealthCampRegistrationDto,
-    CreateWomensHealthCampRegistrationMutation,
+    CreateWomenHealthCheckUpEventInput,
+    CreateWomenHealthCheckupEventMutation,
 } from '@/app/womensHealthCamp/WomensHealthCampGraphQL';
 
 type WomensHealthCampForm = {
@@ -46,22 +46,24 @@ const parseIntegerField = (value: string | number, label: string) => {
 
 const sanitizeDigits = (value?: string) => value?.replace(/\D/g, '') ?? '';
 
-const buildWomensHealthCampInput = (formData: WomensHealthCampForm): CreateWomensHealthCampRegistrationDto => {
-    const mobileCountryCodeDigits = sanitizeDigits(formData.mobileCountryCode) || '91';
+const buildWomensHealthCampInput = (formData: WomensHealthCampForm): CreateWomenHealthCheckUpEventInput => {
+    const countryCodeDigits = sanitizeDigits(formData.mobileCountryCode) || '91';
     const mobileDigits = sanitizeDigits(formData.mobile);
 
     if (mobileDigits.length !== 10) {
         throw new Error('Mobile number must be a valid 10-digit number.');
     }
 
-    const donationAmount = formData.donationAmount?.trim()
-        ? parseIntegerField(formData.donationAmount, 'Donation amount')
-        : null;
+    if (!formData.donationAmount?.trim()) {
+        throw new Error('Donation amount is required.');
+    }
+
+    const donationAmount = parseIntegerField(formData.donationAmount, 'Donation amount');
 
     return {
         fullName: formData.fullName.trim(),
         spouseName: formData.spouseName.trim(),
-        mobileCountryCode: parseIntegerField(mobileCountryCodeDigits, 'Mobile country code'),
+        countryCode: parseIntegerField(countryCodeDigits, 'Country code'),
         mobile: parseIntegerField(mobileDigits, 'Mobile number'),
         email: formData.email.trim(),
         donationAmount,
@@ -87,12 +89,12 @@ const WomensHealthCamp = () => {
 
         try {
             const input = buildWomensHealthCampInput(data);
-            const result = await CreateWomensHealthCampRegistrationMutation(input);
+            const result = await CreateWomenHealthCheckupEventMutation(input);
 
             setStatus('success');
             setFeedbackMessage(
-                result.registrationNumber
-                    ? `Thank you! Your registration number is ${result.registrationNumber}.`
+                result
+                    ? 'Thank you! Your registration has been submitted successfully. Our team will confirm your camp slot shortly.'
                     : 'Thank you! Our team will confirm your camp slot shortly.',
             );
             reset(defaultValues);
