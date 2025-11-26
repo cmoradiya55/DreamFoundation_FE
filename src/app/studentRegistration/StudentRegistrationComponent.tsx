@@ -74,7 +74,8 @@ export interface StudentRegistrationFormData {
   specialNeeds: string;
   hasAllergies: string,
   hasSpecialNeeds: string
-  documents?: StudentDocument[];
+  documents?: string[] | StudentDocument[]; // Selected document types (string[]) or processed documents (StudentDocument[])
+  documentFiles?: Record<string, File | { file: File; url: string } | { front?: File | { file: File; url: string }, back?: File | { file: File; url: string } }>; // Uploaded files with URLs
   feesAcknowledged: boolean;
   declarationAccepted: boolean;
   termsAccepted: boolean;
@@ -110,7 +111,8 @@ const formDataInitial = {
   specialNeeds: '',
   hasAllergies: "false",
   hasSpecialNeeds: "false",
-  documents: [] as StudentDocument[],
+  documents: [] as string[],
+  documentFiles: {} as Record<string, any>,
   feesAcknowledged: false,
   declarationAccepted: false,
   termsAccepted: false,
@@ -207,7 +209,9 @@ const buildStudentRegistrationInput = (
     feesAcknowledged: data.feesAcknowledged,
     declarationAccepted: data.declarationAccepted,
     termsAccepted: data.termsAccepted,
-    documents: data.documents ?? [],
+    documents: Array.isArray(data.documents) && data.documents.length > 0 && typeof data.documents[0] === 'object' 
+      ? (data.documents as unknown as StudentDocument[])
+      : [],
   };
 };
 
@@ -346,7 +350,102 @@ const StudentRegistrationComponent: React.FC = () => {
   const onSubmit = async (data: StudentRegistrationFormData, event?: React.BaseSyntheticEvent) => {
     event?.preventDefault();
     try {
-      const mutationInput = buildStudentRegistrationInput(data);
+      // Process documentFiles to create documents array
+      const documentFiles = data.documentFiles || {};
+      const selectedDocuments = (Array.isArray(data.documents) && data.documents.length > 0 && typeof data.documents[0] === 'string')
+        ? (data.documents as string[])
+        : [];
+      const documentsPayload: StudentDocument[] = [];
+
+      for (const docType of selectedDocuments) {
+        if (docType === 'childAadharCard' || docType === 'parentAadharCard') {
+          // Handle Aadhar cards with front and back
+          const aadharData = documentFiles[docType];
+          const frontData = aadharData && typeof aadharData === 'object' && 'front' in aadharData ? aadharData.front : null;
+          const backData = aadharData && typeof aadharData === 'object' && 'back' in aadharData ? aadharData.back : null;
+
+          if (frontData) {
+            const fileUrl = typeof frontData === 'object' && frontData !== null && 'url' in frontData 
+              ? (frontData as { file: File; url: string }).url 
+              : null;
+            if (fileUrl) {
+              // Convert to camelCase: childAadharCard -> childAadharCardFront, parentAadharCard -> parentAadharCardFront
+              const documentType = docType === 'childAadharCard' ? 'childAadharCardFront' : 'parentAadharCardFront';
+              documentsPayload.push({
+                documentType,
+                documentUrl: fileUrl,
+              });
+            }
+          }
+
+          if (backData) {
+            const fileUrl = typeof backData === 'object' && backData !== null && 'url' in backData 
+              ? (backData as { file: File; url: string }).url 
+              : null;
+            if (fileUrl) {
+              // Convert to camelCase: childAadharCard -> childAadharCardBack, parentAadharCard -> parentAadharCardBack
+              const documentType = docType === 'childAadharCard' ? 'childAadharCardBack' : 'parentAadharCardBack';
+              documentsPayload.push({
+                documentType,
+                documentUrl: fileUrl,
+              });
+            }
+          }
+        } else {
+          // Handle regular documents (single file)
+          const docTypeStr = docType as string;
+          const fileData = documentFiles[docTypeStr];
+          if (fileData) {
+            const fileUrl = typeof fileData === 'object' && fileData !== null && 'url' in fileData 
+              ? (fileData as { file: File; url: string }).url 
+              : null;
+            if (fileUrl) {
+              documentsPayload.push({
+                documentType: docTypeStr,
+                documentUrl: fileUrl,
+              });
+            }
+          }
+        }
+      }
+
+      // Reorder documents according to the specified sequence
+      const documentOrder = [
+        'passportSizePhoto',
+        'childAadharCardFront',
+        'childAadharCardBack',
+        'parentAadharCardFront',
+        'parentAadharCardBack'
+      ];
+
+      const orderedDocuments: StudentDocument[] = [];
+      const unorderedDocuments: StudentDocument[] = [];
+
+      // First, add documents in the specified order
+      for (const docType of documentOrder) {
+        const doc = documentsPayload.find(d => d.documentType === docType);
+        if (doc) {
+          orderedDocuments.push(doc);
+        }
+      }
+
+      // Then, add any remaining documents that weren't in the order list
+      for (const doc of documentsPayload) {
+        if (!documentOrder.includes(doc.documentType)) {
+          unorderedDocuments.push(doc);
+        }
+      }
+
+      // Combine ordered and unordered documents
+      const finalDocumentsPayload = [...orderedDocuments, ...unorderedDocuments];
+
+      // Create submission data with processed documents
+      const submissionData = {
+        ...data,
+        documents: finalDocumentsPayload,
+      } as StudentRegistrationFormData;
+
+      const mutationInput = buildStudentRegistrationInput(submissionData);
       const result = await CreateStudentRegistrationMutation(mutationInput);
       alert(
         `Admission registration submitted successfully! ${
@@ -366,6 +465,7 @@ const StudentRegistrationComponent: React.FC = () => {
       alert(message);
     }
   };
+  console.log('formData', formData);
 
   const handleViewFeesDetails = () => {
     window.open('/studentFeeStructure', '_blank');
@@ -799,17 +899,16 @@ const StudentRegistrationComponent: React.FC = () => {
               </div>
 
               {/* Documents Required */}
-              {/* <DocumentsRequiredComponent
+              <DocumentsRequiredComponent
                 control={control}
                 errors={errors.documents}
                 options={[
-                  { value: 'birthCertificate', label: 'Birth Certificate' },
-                  { value: 'passportSizePhoto', label: 'Recent Passport Size Photo (2)' },
-                  { value: 'addressProof', label: 'Address Proof' },
-                  { value: 'vaccinationRecord', label: 'Vaccination Record' }
+                  { value: 'passportSizePhoto', label: 'Recent Passport Size Photo' },
+                  { value: 'childAadharCard', label: 'Child\'s Aadhar Card' },
+                  { value: 'parentAadharCard', label: 'Parents\'s Aadhar Card' }
                 ]}
                 title="Documents Required"
-              /> */}
+              />
   
               {/* Declaration by Parent / Guardian */}
               <div>
