@@ -823,7 +823,7 @@ const StudentRegistrationComponent: React.FC = () => {
                   <SelectInput
                     name="bloodGroup"
                     control={control}
-                    label="Blood Group"
+                    label="Child's Blood Group"
                     placeholder="Select Blood group"
                     options={[
                       { value: 'A+', label: 'A+' },
@@ -845,7 +845,7 @@ const StudentRegistrationComponent: React.FC = () => {
                     <RadioInput
                       name="hasAllergies"
                       control={control}
-                      label="Do you have any allergies?"
+                      label="Does your child have any allergies?"
                       options={[
                         { value: 'true', label: 'Yes' },
                         { value: 'false', label: 'No' }
@@ -873,7 +873,7 @@ const StudentRegistrationComponent: React.FC = () => {
                     <RadioInput
                       name="hasSpecialNeeds"
                       control={control}
-                      label="Do you have any special needs / health conditions?"
+                      label="Does your child have any special needs / health conditions?"
                       options={[
                         { value: 'true', label: 'Yes' },
                         { value: 'false', label: 'No' }
