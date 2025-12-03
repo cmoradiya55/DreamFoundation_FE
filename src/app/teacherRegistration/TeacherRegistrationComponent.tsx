@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { useForm, useFieldArray, FieldError, Controller } from 'react-hook-form';
+import { useForm, useFieldArray, FieldError } from 'react-hook-form';
 import {
   User,
   Mail,
@@ -12,19 +12,14 @@ import {
   ArrowRight,
   Loader2,
   Calendar,
-  Baby,
   ScanHeart,
-  Laptop,
   Grid2x2,
-  FileText,
   VenusAndMars,
-  Link,
-  Droplet,
   BookOpenCheck,
   Briefcase
 } from 'lucide-react';
 
-import { TextInput, MobileInput, TextArea, DateInput, RadioInput, SelectInput } from '../../components/FormComponents';
+import { TextInput, MobileInput, DateInput, RadioInput, SelectInput } from '../../components/FormComponents';
 
 import CheckboxInput from '@/components/FormComponents/CheckboxInput';
 import AcknowledgmentCheckbox from '@/components/FormComponents/AcknowledgmentCheckbox';

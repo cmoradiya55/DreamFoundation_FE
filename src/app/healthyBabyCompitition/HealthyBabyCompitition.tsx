@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Baby, User, Calendar, Ruler, Scale, Phone, Mail, ShieldCheck } from 'lucide-react';
+import { Baby, User, Calendar, Ruler, Scale } from 'lucide-react';
 
 import { MobileInput, TextInput, DateInput, RadioInput } from '@/components/FormComponents';
 import AcknowledgmentCheckbox from '@/components/FormComponents/AcknowledgmentCheckbox';

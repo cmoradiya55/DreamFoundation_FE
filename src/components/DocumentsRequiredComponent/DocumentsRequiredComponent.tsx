@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Control, FieldError, useWatch, Controller } from 'react-hook-form';
-import { FileText, Image as ImageIcon, X, Camera, FileTextIcon } from 'lucide-react';
+import { FileText, Image as ImageIcon, X, FileTextIcon } from 'lucide-react';
 import { upoadFile } from '@/lib/presignedUrl';
 
 interface DocumentOption {
@@ -77,7 +77,6 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({ name, control, docTyp
           if (selectedFile) {
             setIsDragging(false);
             setPresignError(null);
-            const contentType = selectedFile.type || 'application/octet-stream';
 
             try {
               setIsRequestingPresign(true);

@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { ArrowLeft } from 'lucide-react';
 
 const FeeStructureComponent = () => {
   const feeCategories = [

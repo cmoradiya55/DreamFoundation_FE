@@ -1,23 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useForm, useFieldArray, FieldError, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
   User,
   Mail,
   MapPin,
-  CreditCard,
-  Plus,
   GraduationCap,
   ArrowRight,
   Loader2,
   Calendar,
   Baby,
-  Venus,
   VenusAndMars,
-  PcCase,
-  MarsIcon,
-  Mars,
   MarsStrokeIcon,
   VenusIcon,
   BriefcaseBusinessIcon,
@@ -27,7 +21,6 @@ import {
   Droplet,
   Tablets,
   Accessibility,
-  AlertCircle
 } from 'lucide-react';
 
 import { TextInput, MobileInput, TextArea, DateInput, RadioInput, SelectInput } from '../../components/FormComponents';
@@ -535,11 +528,10 @@ const StudentRegistrationComponent: React.FC = () => {
                     control={control}
                     label="Date of Birth"
                     required={true}
-                    error={errors.dateOfBirth as FieldError}
+                    error={errors.dateOfBirth}
                     className=""
                     max={new Date().toISOString().split('T')[0]}
-                    icon={<Calendar className="w-4 h-4 text-teal-700" />}
-                  />
+                    icon={<Calendar className="w-4 h-4 text-teal-700" />} />
 
                   {/* Age - Now read-only and auto-calculated */}
                   <TextInput

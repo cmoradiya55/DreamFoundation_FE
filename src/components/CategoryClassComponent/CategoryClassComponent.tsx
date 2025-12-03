@@ -18,7 +18,6 @@ const CategoryClassComponent: React.FC<CategoryClassComponentProps> = ({
   control,
   errors,
   getValues,
-  watch,
   watchedDateOfBirth,
   isAgeExceedingCriteria,
   isAgeBelowCriteria
