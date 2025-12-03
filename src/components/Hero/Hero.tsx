@@ -131,6 +131,12 @@ const Hero = () => {
                                 Women’s Health Camp
                             </button>
                             <button
+                                className={tabButtonClasses(activeGallery === 5)}
+                                onClick={() => setActiveGallery(5)}
+                            >
+                                Healthy Baby Compitition
+                            </button>
+                            <button
                                 className={tabButtonClasses(activeGallery === 2)}
                                 onClick={() => setActiveGallery(2)}
                             >
@@ -150,7 +156,7 @@ const Hero = () => {
                                 <div className="relative min-h-[420px] md:min-h-[520px] lg:min-h-[740px] overflow-hidden rounded-3xl">
                                     <Image
                                         src="/images/WomenHealthCamp/WomenHealthCamp.webp"
-                                        alt="Women’s Health Camp attendees"
+                                        alt="Women's Health Camp attendees"
                                         fill
                                         className="object-contain"
                                         sizes="(max-width: 1024px) 100vw, 960px"
@@ -163,6 +169,27 @@ const Hero = () => {
                                         onClick={() => router.push('/womensHealthCamp')}
                                     >
                                         Register for the Camp
+                                    </button>
+                                </div>
+                            </div>
+                        ) : activeGallery === 5 ? (
+                            <div className="space-y-6">
+                                <div className="relative min-h-[420px] md:min-h-[520px] lg:min-h-[740px] overflow-hidden rounded-3xl">
+                                    <Image
+                                        src="/images/HealthyBabyCompitition.webp"
+                                        alt="Healthy Baby Competition"
+                                        fill
+                                        className="object-contain"
+                                        sizes="(max-width: 1024px) 100vw, 960px"
+                                        priority
+                                    />
+                                </div>
+                                <div className="flex justify-center">
+                                    <button
+                                        className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#042f2e] to-[#55a976] px-8 py-4 text-sm font-semibold uppercase tracking-wide text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl mt-6"
+                                        onClick={() => router.push('/healthyBabyCompitition')}
+                                    >
+                                        Register for the Competition
                                     </button>
                                 </div>
                             </div>

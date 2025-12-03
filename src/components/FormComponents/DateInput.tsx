@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Control, Controller, FieldError } from 'react-hook-form';
+import { Control, Controller, FieldError, RegisterOptions } from 'react-hook-form';
 import { AlertCircle } from 'lucide-react';
 
 interface DateInputProps {
@@ -14,6 +14,7 @@ interface DateInputProps {
   min?: string;
   max?: string;
   icon?: React.ReactNode;
+  rules?: RegisterOptions;
 }
 
 const DateInput: React.FC<DateInputProps> = ({
@@ -26,6 +27,7 @@ const DateInput: React.FC<DateInputProps> = ({
   min,
   max,
   icon,
+  rules,
 }) => {
   return (
     <div className={`space-y-2 ${className}`}>
@@ -37,7 +39,7 @@ const DateInput: React.FC<DateInputProps> = ({
       <Controller
         name={name}
         control={control}
-        rules={required ? { required: `${label} is required` } : undefined}
+        rules={rules || (required ? { required: `${label} is required` } : undefined)}
         render={({ field }) => (
           <input
             {...field}
