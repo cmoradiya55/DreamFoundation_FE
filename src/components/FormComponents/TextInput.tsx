@@ -40,9 +40,7 @@ const TextInput: React.FC<TextInputProps> = ({
       {!hideLabel && (
         <label 
           htmlFor={name} 
-          className={`block text-sm font-semibold flex items-center gap-2 ${
-            disabled ? 'text-gray-500' : 'text-teal-700'
-          }`}
+          className="block text-sm font-semibold flex items-center gap-2 text-teal-700"
         >
           {icon}
           {label}
@@ -69,12 +67,12 @@ const TextInput: React.FC<TextInputProps> = ({
             type={type}
             placeholder={placeholder}
             disabled={disabled}
-            className={`w-full border-2 rounded-xl transition-all duration-200 focus:outline-none focus:ring-0.5 placeholder:text-gray-500 text-gray-900 ${
+            className={`w-full border-2 rounded-xl transition-all duration-200 focus:outline-none focus:ring-0.5 placeholder:text-gray-500 ${
               disabled 
-                ? 'bg-gray-100 border-gray-300 text-gray-500 cursor-not-allowed' 
+                ? 'bg-teal-50 border-teal-200 text-teal-700 cursor-not-allowed' 
                 : error 
-                  ? 'border-red-300 bg-red-50 focus:border-red-500 focus:ring-red-100' 
-                  : 'border-teal-200 bg-teal-50 focus:border-teal-500 focus:ring-teal-100 focus:bg-white'
+                  ? 'border-red-300 bg-red-50 focus:border-red-500 focus:ring-red-100 text-gray-900' 
+                  : 'border-teal-200 bg-teal-50 focus:border-teal-500 focus:ring-teal-100 focus:bg-white text-gray-900'
             } ${inputClassName}`}
           />
         )}
