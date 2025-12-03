@@ -43,24 +43,24 @@ const Hero = () => {
     const [lightboxIndex, setLightboxIndex] = useState(0);
     const router = useRouter();
 
-    const helixImages = [
-        '/images/Helix/Helix_Academy_001.webp',
-        '/images/Helix/Helix_Academy_002.webp',
-        '/images/Helix/Helix_Academy_003.webp',
-        '/images/Helix/Helix_Academy_004.webp',
-        '/images/Helix/Helix_Academy_005.webp',
-        '/images/Helix/Helix_Academy_006.webp',
-        '/images/Helix/Helix_Academy_007.webp',
-        '/images/Helix/Helix_Academy_008.webp',
-        '/images/Helix/Helix_Academy_009.webp',
-        '/images/Helix/Helix_Academy_010.webp',
-        '/images/Helix/Helix_Academy_011.webp',
-        '/images/Helix/Helix_Academy_012.webp',
-        '/images/Helix/Helix_Academy_013.webp',
-        '/images/Helix/Helix_Academy_014.webp',
-        '/images/Helix/Helix_Academy_015.webp',
-        '/images/Helix/Helix_Academy_016.webp',
-    ];
+    // const helixImages = [
+    //     '/images/Helix/Helix_Academy_001.webp',
+    //     '/images/Helix/Helix_Academy_002.webp',
+    //     '/images/Helix/Helix_Academy_003.webp',
+    //     '/images/Helix/Helix_Academy_004.webp',
+    //     '/images/Helix/Helix_Academy_005.webp',
+    //     '/images/Helix/Helix_Academy_006.webp',
+    //     '/images/Helix/Helix_Academy_007.webp',
+    //     '/images/Helix/Helix_Academy_008.webp',
+    //     '/images/Helix/Helix_Academy_009.webp',
+    //     '/images/Helix/Helix_Academy_010.webp',
+    //     '/images/Helix/Helix_Academy_011.webp',
+    //     '/images/Helix/Helix_Academy_012.webp',
+    //     '/images/Helix/Helix_Academy_013.webp',
+    //     '/images/Helix/Helix_Academy_014.webp',
+    //     '/images/Helix/Helix_Academy_015.webp',
+    //     '/images/Helix/Helix_Academy_016.webp',
+    // ];
 
     const tinyYatraImages = [
         '/images/canva_2.webp',
@@ -70,27 +70,10 @@ const Hero = () => {
         '/images/canva_6.webp',
     ];
 
-    // const concertImage = [
-    //     // '/images/concertImages/concert_img_1.png',
-    //     // '/images/concertImages/concert_img_2.webp',
-    //     // '/images/concertImages/concert_img_3.webp',
-    //     '/images/concertImages/concert_img_4.webp',
-    //     '/images/concertImages/concert_img_5.webp',
-    //     '/images/concertImages/concert_img_6.webp',
-    // ]
-
-    // useEffect(() => {
-    //     const slideInterval = setTimeout(() => {
-    //         setCurrentImageIndex((prevIndex) =>
-    //             prevIndex === concertImage.length - 1 ? 0 : prevIndex + 1
-    //         );
-    //     }, 4000);
-
-    //     return () => clearTimeout(slideInterval);
-    // }, [currentImageIndex, concertImage.length]);
-
-    // const currentGalleryImages = activeGallery == 1 ? concertImage : (activeGallery === 2 ? helixImages : tinyYatraImages);
-    const currentGalleryImages = activeGallery === 2 ? helixImages : activeGallery === 3 ? tinyYatraImages : helixImages;
+    let currentGalleryImages: string[] = [];
+    if (activeGallery === 3) {
+        currentGalleryImages = tinyYatraImages;
+    } 
 
     const openLightbox = (index: number) => {
         setLightboxIndex(index);
@@ -136,12 +119,12 @@ const Hero = () => {
                             >
                                 Healthy Baby Compitition
                             </button>
-                            <button
+                            {/* <button
                                 className={tabButtonClasses(activeGallery === 2)}
                                 onClick={() => setActiveGallery(2)}
                             >
                                 Helix Academy
-                            </button>
+                            </button> */}
                             <button
                                 className={tabButtonClasses(activeGallery === 3)}
                                 onClick={() => setActiveGallery(3)}
