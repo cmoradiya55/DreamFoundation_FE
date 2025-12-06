@@ -1,11 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 const Hero = () => {
-    const [activeGallery, setActiveGallery] = useState<number>(4);
     const router = useRouter();
 
     const events = [
@@ -35,8 +33,8 @@ const Hero = () => {
         }
     ];
 
-    const renderEventIcon = (iconType: string, isActive: boolean) => {
-        const iconClasses = `w-full h-full transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`;
+    const renderEventIcon = (iconType: string) => {
+        const iconClasses = 'w-full h-full transition-transform duration-300 group-hover:scale-110';
 
         if (iconType === "health") {
             return (
@@ -144,21 +142,14 @@ const Hero = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                             {events.map((event) => {
-                                const isActive = activeGallery === event.id;
-
                                 return (
                                     <div
                                         key={event.id}
-                                        onClick={() => setActiveGallery(event.id)}
-                                        className={`group relative bg-white rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 ${
-                                            isActive
-                                                ? 'shadow-2xl scale-105 ring-4 ring-teal-500/50'
-                                                : 'shadow-lg hover:shadow-xl hover:-translate-y-2'
-                                        }`}
+                                        className="group relative bg-white rounded-2xl overflow-hidden transition-all duration-500 shadow-lg hover:shadow-xl hover:-translate-y-2"
                                     >
                                         <div className={`relative h-64 flex items-center justify-center bg-gradient-to-br ${event.gradient} bg-opacity-10 p-8`}>
                                             <div className="w-48 h-48">
-                                                {renderEventIcon(event.iconType, isActive)}
+                                                {renderEventIcon(event.iconType)}
                                             </div>
                                         </div>
                                         <div className="p-6">
@@ -168,12 +159,9 @@ const Hero = () => {
                                             <p className="text-[#0f766e] text-sm leading-relaxed mb-4">
                                                 {event.description}
                                             </p>
-                                            {isActive && event.route && (
+                                            {event.route && (
                                                 <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        router.push(event.route);
-                                                    }}
+                                                    onClick={() => router.push(event.route)}
                                                     className="w-full mt-2 bg-gradient-to-r from-[#042f2e] to-[#55a976] text-white font-semibold py-3 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
                                                 >
                                                     Register Now
