@@ -2,75 +2,101 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { X, ChevronLeft, ChevronRight, Calendar, Users, Heart } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 const Hero = () => {
     const [activeGallery, setActiveGallery] = useState<number>(4);
-    const [lightboxOpen, setLightboxOpen] = useState(false);
-    const [lightboxIndex, setLightboxIndex] = useState(0);
     const router = useRouter();
-
-    const tinyYatraImages = [
-        '/images/canva_2.webp',
-        '/images/canva_1.webp',
-        '/images/canva_4.webp',
-        '/images/canva_5.webp',
-        '/images/canva_6.webp',
-    ];
-
-    let currentGalleryImages: string[] = [];
-    if (activeGallery === 3) {
-        currentGalleryImages = tinyYatraImages;
-    } 
-
-    const openLightbox = (index: number) => {
-        setLightboxIndex(index);
-        setLightboxOpen(true);
-    };
-
-    const closeLightbox = () => {
-        setLightboxOpen(false);
-    };
-
-    const nextImage = () => {
-        setLightboxIndex((prev) => (prev + 1) % currentGalleryImages.length);
-    };
-
-    const prevImage = () => {
-        setLightboxIndex((prev) => (prev - 1 + currentGalleryImages.length) % currentGalleryImages.length);
-    };
 
     const events = [
         {
             id: 4,
             title: "Women's Health Camp",
             description: "Comprehensive health screening and wellness program for women",
-            image: "/images/WomenHealthCamp/WomenHealthCamp.webp",
             route: "/womensHealthCamp",
-            icon: Heart,
-            gradient: "from-rose-500 to-pink-500"
+            gradient: "from-rose-500 to-pink-500",
+            iconType: "health"
         },
         {
             id: 5,
             title: "Healthy Baby Competition",
             description: "Celebrating healthy growth and development milestones",
-            image: "/images/HealthyBabyCompitition.webp",
             route: "/healthyBabyCompitition",
-            icon: Users,
-            gradient: "from-blue-500 to-cyan-500"
+            gradient: "from-blue-500 to-cyan-500",
+            iconType: "baby"
         },
         {
             id: 3,
             title: "Tiny Yatra",
             description: "Fun-filled educational journey for young minds",
-            image: "/images/canva_2.webp",
-            route: null,
-            icon: Calendar,
-            gradient: "from-emerald-500 to-teal-500"
+            route: "/tinyYatra",
+            gradient: "from-emerald-500 to-teal-500",
+            iconType: "journey"
         }
     ];
+
+    const renderEventIcon = (iconType: string, isActive: boolean) => {
+        const iconClasses = `w-full h-full transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`;
+
+        if (iconType === "health") {
+            return (
+                <svg className={iconClasses} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="90" fill="url(#healthGradient)" opacity="0.1"/>
+                    <path d="M100 60C85 60 75 68 75 80C75 92 85 104 100 120C115 104 125 92 125 80C125 68 115 60 100 60Z" fill="url(#healthGradient)"/>
+                    <circle cx="70" cy="110" r="15" fill="url(#healthGradient)" opacity="0.6"/>
+                    <circle cx="130" cy="110" r="15" fill="url(#healthGradient)" opacity="0.6"/>
+                    <circle cx="100" cy="130" r="18" fill="white"/>
+                    <path d="M100 120V140M90 130H110" stroke="url(#healthGradient)" strokeWidth="4" strokeLinecap="round"/>
+                    <path d="M60 70C60 70 55 60 50 60M140 70C140 70 145 60 150 60" stroke="url(#healthGradient)" strokeWidth="3" strokeLinecap="round"/>
+                    <defs>
+                        <linearGradient id="healthGradient" x1="50" y1="60" x2="150" y2="140">
+                            <stop stopColor="#f43f5e"/>
+                            <stop offset="1" stopColor="#ec4899"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            );
+        } else if (iconType === "baby") {
+            return (
+                <svg className={iconClasses} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="70" r="35" fill="url(#babyGradient)"/>
+                    <ellipse cx="88" cy="65" rx="6" ry="8" fill="white"/>
+                    <ellipse cx="112" cy="65" rx="6" ry="8" fill="white"/>
+                    <path d="M88 76C88 76 92 82 100 82C108 82 112 76 112 76" stroke="white" strokeWidth="4" strokeLinecap="round"/>
+                    <path d="M70 55C70 55 60 45 50 45M130 55C130 55 140 45 150 45" stroke="url(#babyGradient)" strokeWidth="4" strokeLinecap="round"/>
+                    <ellipse cx="100" cy="130" rx="50" ry="40" fill="url(#babyGradient)" opacity="0.2"/>
+                    <path d="M70 120L80 125L70 130M130 120L120 125L130 130" stroke="url(#babyGradient)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="100" cy="135" r="8" fill="url(#babyGradient)"/>
+                    <path d="M60 100C65 95 75 92 85 95M140 100C135 95 125 92 115 95" stroke="url(#babyGradient)" strokeWidth="3" strokeLinecap="round"/>
+                    <defs>
+                        <linearGradient id="babyGradient" x1="50" y1="45" x2="150" y2="145">
+                            <stop stopColor="#3b82f6"/>
+                            <stop offset="1" stopColor="#06b6d4"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            );
+        } else {
+            return (
+                <svg className={iconClasses} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60 90C60 75 65 60 75 55L100 40L125 55C135 60 140 75 140 90V130C140 145 135 160 125 165L100 180L75 165C65 160 60 145 60 130V90Z" fill="url(#journeyGradient)" opacity="0.15"/>
+                    <circle cx="100" cy="100" r="40" fill="url(#journeyGradient)"/>
+                    <path d="M100 75V100L118 118" stroke="white" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M65 50L75 60M135 50L125 60M100 30V45" stroke="url(#journeyGradient)" strokeWidth="4" strokeLinecap="round"/>
+                    <circle cx="65" cy="150" r="8" fill="url(#journeyGradient)"/>
+                    <circle cx="135" cy="150" r="8" fill="url(#journeyGradient)"/>
+                    <circle cx="100" cy="160" r="6" fill="url(#journeyGradient)" opacity="0.6"/>
+                    <path d="M50 120C50 120 60 130 70 130M150 120C150 120 140 130 130 130" stroke="url(#journeyGradient)" strokeWidth="3" strokeLinecap="round"/>
+                    <defs>
+                        <linearGradient id="journeyGradient" x1="60" y1="30" x2="140" y2="180">
+                            <stop stopColor="#10b981"/>
+                            <stop offset="1" stopColor="#14b8a6"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            );
+        }
+    };
 
     return (
         <>
@@ -93,7 +119,6 @@ const Hero = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                             {events.map((event) => {
-                                const IconComponent = event.icon;
                                 const isActive = activeGallery === event.id;
 
                                 return (
@@ -106,24 +131,9 @@ const Hero = () => {
                                                 : 'shadow-lg hover:shadow-xl hover:-translate-y-2'
                                         }`}
                                     >
-                                        <div className="relative h-64 overflow-hidden">
-                                            <Image
-                                                src={event.image}
-                                                alt={event.title}
-                                                fill
-                                                className={`object-cover transition-transform duration-700 ${
-                                                    isActive ? 'scale-110' : 'group-hover:scale-110'
-                                                }`}
-                                            />
-                                            <div className={`absolute inset-0 bg-gradient-to-t ${event.gradient} opacity-60 transition-opacity duration-300 ${
-                                                isActive ? 'opacity-70' : 'group-hover:opacity-70'
-                                            }`}></div>
-                                            <div className="absolute top-4 right-4">
-                                                <div className={`p-3 rounded-full bg-white/90 backdrop-blur-sm transition-transform duration-300 ${
-                                                    isActive ? 'scale-110' : 'group-hover:scale-110'
-                                                }`}>
-                                                    <IconComponent className="w-6 h-6 text-teal-700" />
-                                                </div>
+                                        <div className={`relative h-64 flex items-center justify-center bg-gradient-to-br ${event.gradient} bg-opacity-10 p-8`}>
+                                            <div className="w-48 h-48">
+                                                {renderEventIcon(event.iconType, isActive)}
                                             </div>
                                         </div>
                                         <div className="p-6">
@@ -150,28 +160,6 @@ const Hero = () => {
                             })}
                         </div>
 
-                        {activeGallery === 3 && (
-                            <div className="mt-12 animate-fade-in">
-                                <h3 className="text-2xl font-bold text-[#134e4a] mb-6 text-center">Gallery</h3>
-                                <div className="grid gap-4 sm:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-                                    {currentGalleryImages.map((image, index) => (
-                                        <div
-                                            key={image}
-                                            className="relative aspect-square overflow-hidden rounded-xl shadow-lg cursor-pointer transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl group"
-                                            onClick={() => openLightbox(index)}
-                                        >
-                                            <Image
-                                                src={image}
-                                                alt={`Tiny Yatra image ${index + 1}`}
-                                                fill
-                                                className="object-cover transition-transform duration-500 group-hover:scale-110"
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </section>
 
@@ -202,7 +190,9 @@ const Hero = () => {
 
                             <div className="group relative bg-gradient-to-br from-cyan-50 to-blue-50 p-8 rounded-2xl border border-cyan-200/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
                                 <div className="w-14 h-14 bg-gradient-to-br from-[#042f2e] to-[#55a976] rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                                    <Users className="w-7 h-7 text-white" />
+                                    <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    </svg>
                                 </div>
                                 <h3 className="text-xl font-bold text-[#115e59] mb-3">Community Events</h3>
                                 <p className="text-[#0f766e] leading-relaxed">
@@ -271,48 +261,6 @@ const Hero = () => {
                     </div>
                 </section>
             </main>
-            {lightboxOpen && (
-                <div
-                    className="fixed inset-0 bg-black/95 z-[9999] flex items-center justify-center p-4 sm:p-6"
-                    onClick={closeLightbox}
-                >
-                    <button
-                        className="fixed top-4 right-4 sm:top-6 sm:right-6 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md flex items-center justify-center transition-transform duration-200 hover:scale-105 hover:bg-white/20"
-                        onClick={closeLightbox}
-                    >
-                        <X size={28} />
-                    </button>
-                    <button
-                        className="hidden sm:flex absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md items-center justify-center hover:scale-105 transition"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            prevImage();
-                        }}
-                    >
-                        <ChevronLeft size={32} />
-                    </button>
-                    <button
-                        className="hidden sm:flex absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md items-center justify-center hover:scale-105 transition"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            nextImage();
-                        }}
-                    >
-                        <ChevronRight size={32} />
-                    </button>
-                    <div
-                        className="relative w-full max-w-5xl aspect-video"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <Image
-                            src={currentGalleryImages[lightboxIndex]}
-                            alt={`${activeGallery === 2 ? 'Helix Academy' : 'Tiny Yatra'} image ${lightboxIndex + 1}`}
-                            fill
-                            className="object-contain"
-                        />
-                    </div>
-                </div>
-            )}
         </>
     );
 };
