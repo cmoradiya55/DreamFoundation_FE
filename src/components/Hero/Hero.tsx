@@ -41,15 +41,18 @@ const Hero = () => {
         if (iconType === "health") {
             return (
                 <svg className={iconClasses} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="100" cy="100" r="90" fill="url(#healthGradient)" opacity="0.1"/>
-                    <path d="M100 60C85 60 75 68 75 80C75 92 85 104 100 120C115 104 125 92 125 80C125 68 115 60 100 60Z" fill="url(#healthGradient)"/>
-                    <circle cx="70" cy="110" r="15" fill="url(#healthGradient)" opacity="0.6"/>
-                    <circle cx="130" cy="110" r="15" fill="url(#healthGradient)" opacity="0.6"/>
-                    <circle cx="100" cy="130" r="18" fill="white"/>
-                    <path d="M100 120V140M90 130H110" stroke="url(#healthGradient)" strokeWidth="4" strokeLinecap="round"/>
-                    <path d="M60 70C60 70 55 60 50 60M140 70C140 70 145 60 150 60" stroke="url(#healthGradient)" strokeWidth="3" strokeLinecap="round"/>
+                    <circle cx="100" cy="100" r="85" fill="url(#healthGradient)" opacity="0.08"/>
+                    <path d="M100 50C90 50 85 55 85 65C85 70 87 75 95 85C95 85 100 90 100 95C100 90 105 85 105 85C113 75 115 70 115 65C115 55 110 50 100 50Z" fill="url(#healthGradient)"/>
+                    <ellipse cx="100" cy="115" rx="35" ry="45" fill="url(#healthGradient)" opacity="0.15"/>
+                    <path d="M75 105C75 105 80 110 85 110C90 110 95 105 95 105M105 105C105 105 110 110 115 110C120 110 125 105 125 105" stroke="url(#healthGradient)" strokeWidth="3" strokeLinecap="round"/>
+                    <circle cx="100" cy="125" r="22" fill="white" stroke="url(#healthGradient)" strokeWidth="3"/>
+                    <path d="M100 112V138M87 125H113" stroke="url(#healthGradient)" strokeWidth="5" strokeLinecap="round"/>
+                    <circle cx="70" cy="85" r="6" fill="url(#healthGradient)" opacity="0.4"/>
+                    <circle cx="130" cy="85" r="6" fill="url(#healthGradient)" opacity="0.4"/>
+                    <path d="M65 70C62 68 58 65 55 62M135 70C138 68 142 65 145 62" stroke="url(#healthGradient)" strokeWidth="2.5" strokeLinecap="round"/>
+                    <path d="M50 145C55 155 65 162 75 165M150 145C145 155 135 162 125 165" stroke="url(#healthGradient)" strokeWidth="2" strokeLinecap="round" opacity="0.3"/>
                     <defs>
-                        <linearGradient id="healthGradient" x1="50" y1="60" x2="150" y2="140">
+                        <linearGradient id="healthGradient" x1="55" y1="50" x2="145" y2="165">
                             <stop stopColor="#f43f5e"/>
                             <stop offset="1" stopColor="#ec4899"/>
                         </linearGradient>
@@ -59,17 +62,24 @@ const Hero = () => {
         } else if (iconType === "baby") {
             return (
                 <svg className={iconClasses} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="100" cy="70" r="35" fill="url(#babyGradient)"/>
-                    <ellipse cx="88" cy="65" rx="6" ry="8" fill="white"/>
-                    <ellipse cx="112" cy="65" rx="6" ry="8" fill="white"/>
-                    <path d="M88 76C88 76 92 82 100 82C108 82 112 76 112 76" stroke="white" strokeWidth="4" strokeLinecap="round"/>
-                    <path d="M70 55C70 55 60 45 50 45M130 55C130 55 140 45 150 45" stroke="url(#babyGradient)" strokeWidth="4" strokeLinecap="round"/>
-                    <ellipse cx="100" cy="130" rx="50" ry="40" fill="url(#babyGradient)" opacity="0.2"/>
-                    <path d="M70 120L80 125L70 130M130 120L120 125L130 130" stroke="url(#babyGradient)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                    <circle cx="100" cy="135" r="8" fill="url(#babyGradient)"/>
-                    <path d="M60 100C65 95 75 92 85 95M140 100C135 95 125 92 115 95" stroke="url(#babyGradient)" strokeWidth="3" strokeLinecap="round"/>
+                    <circle cx="100" cy="90" r="40" fill="url(#babyGradient)"/>
+                    <ellipse cx="85" cy="85" rx="7" ry="10" fill="white"/>
+                    <ellipse cx="115" cy="85" rx="7" ry="10" fill="white"/>
+                    <circle cx="85" cy="87" r="4" fill="url(#babyGradient)"/>
+                    <circle cx="115" cy="87" r="4" fill="url(#babyGradient)"/>
+                    <path d="M85 100C85 100 90 108 100 108C110 108 115 100 115 100" stroke="white" strokeWidth="5" strokeLinecap="round"/>
+                    <circle cx="75" cy="95" r="5" fill="#fca5a5" opacity="0.6"/>
+                    <circle cx="125" cy="95" r="5" fill="#fca5a5" opacity="0.6"/>
+                    <path d="M65 70C65 70 55 58 48 58M135 70C135 70 145 58 152 58" stroke="url(#babyGradient)" strokeWidth="5" strokeLinecap="round"/>
+                    <ellipse cx="100" cy="150" rx="55" ry="30" fill="url(#babyGradient)" opacity="0.15"/>
+                    <path d="M60 140L75 147L62 154M140 140L125 147L138 154" stroke="url(#babyGradient)" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M85 130L95 140L90 150M115 130L105 140L110 150" stroke="url(#babyGradient)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" opacity="0.5"/>
+                    <path d="M70 42L75 35L72 48M130 42L125 35L128 48" fill="url(#babyGradient)"/>
+                    <path d="M55 100C60 95 70 92 80 95M145 100C140 95 130 92 120 95" stroke="url(#babyGradient)" strokeWidth="3" strokeLinecap="round"/>
+                    <circle cx="100" cy="45" r="8" fill="#fbbf24" opacity="0.8"/>
+                    <path d="M92 40L96 36L94 42M108 40L104 36L106 42M100 37L98 32L102 32Z" fill="#fbbf24"/>
                     <defs>
-                        <linearGradient id="babyGradient" x1="50" y1="45" x2="150" y2="145">
+                        <linearGradient id="babyGradient" x1="48" y1="35" x2="152" y2="154">
                             <stop stopColor="#3b82f6"/>
                             <stop offset="1" stopColor="#06b6d4"/>
                         </linearGradient>
@@ -79,16 +89,31 @@ const Hero = () => {
         } else {
             return (
                 <svg className={iconClasses} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M60 90C60 75 65 60 75 55L100 40L125 55C135 60 140 75 140 90V130C140 145 135 160 125 165L100 180L75 165C65 160 60 145 60 130V90Z" fill="url(#journeyGradient)" opacity="0.15"/>
-                    <circle cx="100" cy="100" r="40" fill="url(#journeyGradient)"/>
-                    <path d="M100 75V100L118 118" stroke="white" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M65 50L75 60M135 50L125 60M100 30V45" stroke="url(#journeyGradient)" strokeWidth="4" strokeLinecap="round"/>
-                    <circle cx="65" cy="150" r="8" fill="url(#journeyGradient)"/>
-                    <circle cx="135" cy="150" r="8" fill="url(#journeyGradient)"/>
-                    <circle cx="100" cy="160" r="6" fill="url(#journeyGradient)" opacity="0.6"/>
-                    <path d="M50 120C50 120 60 130 70 130M150 120C150 120 140 130 130 130" stroke="url(#journeyGradient)" strokeWidth="3" strokeLinecap="round"/>
+                    <rect x="40" y="80" width="120" height="70" rx="12" fill="url(#journeyGradient)"/>
+                    <rect x="40" y="65" width="120" height="15" rx="8" fill="url(#journeyGradient)" opacity="0.7"/>
+                    <circle cx="65" cy="150" r="12" fill="#1f2937" stroke="url(#journeyGradient)" strokeWidth="3"/>
+                    <circle cx="135" cy="150" r="12" fill="#1f2937" stroke="url(#journeyGradient)" strokeWidth="3"/>
+                    <circle cx="65" cy="150" r="5" fill="white" opacity="0.4"/>
+                    <circle cx="135" cy="150" r="5" fill="white" opacity="0.4"/>
+                    <rect x="55" y="90" width="25" height="30" rx="4" fill="white" opacity="0.3"/>
+                    <rect x="90" y="90" width="25" height="30" rx="4" fill="white" opacity="0.3"/>
+                    <rect x="125" y="90" width="25" height="30" rx="4" fill="white" opacity="0.3"/>
+                    <path d="M60 95L62 100L58 100Z" fill="url(#journeyGradient)" opacity="0.6"/>
+                    <circle cx="67" cy="100" r="3" fill="url(#journeyGradient)"/>
+                    <path d="M95 95L97 100L93 100Z" fill="url(#journeyGradient)" opacity="0.6"/>
+                    <circle cx="102" cy="100" r="3" fill="url(#journeyGradient)"/>
+                    <path d="M130 95L132 100L128 100Z" fill="url(#journeyGradient)" opacity="0.6"/>
+                    <circle cx="137" cy="100" r="3" fill="url(#journeyGradient)"/>
+                    <rect x="50" y="125" width="100" height="20" rx="4" fill="url(#journeyGradient)" opacity="0.2"/>
+                    <path d="M55 135H75M80 135H100M105 135H145" stroke="url(#journeyGradient)" strokeWidth="2" strokeLinecap="round"/>
+                    <path d="M25 75C25 75 35 65 40 65M175 75C175 75 165 65 160 65" stroke="url(#journeyGradient)" strokeWidth="3" strokeLinecap="round"/>
+                    <circle cx="28" cy="78" r="6" fill="#fbbf24"/>
+                    <circle cx="172" cy="78" r="6" fill="#ef4444"/>
+                    <path d="M85 55L95 45L105 45L115 55L105 50L95 50Z" fill="url(#journeyGradient)" opacity="0.5"/>
+                    <circle cx="100" cy="48" r="8" fill="white" opacity="0.8"/>
+                    <path d="M95 48L100 43L105 48L100 52Z" fill="url(#journeyGradient)"/>
                     <defs>
-                        <linearGradient id="journeyGradient" x1="60" y1="30" x2="140" y2="180">
+                        <linearGradient id="journeyGradient" x1="40" y1="43" x2="160" y2="150">
                             <stop stopColor="#10b981"/>
                             <stop offset="1" stopColor="#14b8a6"/>
                         </linearGradient>
