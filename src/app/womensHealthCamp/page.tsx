@@ -22,7 +22,7 @@ export default function WomensHealthCampPage() {
           <div className="relative p-8 sm:p-10 space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full bg-emerald-100 text-emerald-800 px-4 py-2 text-sm font-semibold">
               <span className="h-2 w-2 rounded-full bg-emerald-500" />
-              Women's Health Camp
+              Women&apos;s Health Camp
             </div>
 
             <div className="space-y-2">
@@ -30,7 +30,7 @@ export default function WomensHealthCampPage() {
                 Community Wellness & Preventive Screening
               </h1>
               <p className="text-base sm:text-lg text-[#0f766e] max-w-3xl">
-                A focused initiative to provide checkups, guidance, and awareness for women's health
+                A focused initiative to provide checkups, guidance, and awareness for women&apos;s health
                 in our community.
               </p>
             </div>
