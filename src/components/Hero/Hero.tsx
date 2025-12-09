@@ -38,7 +38,7 @@ const Hero = () => {
     // Auto slide functionality with setTimeout
 
 
-    const [activeGallery, setActiveGallery] = useState<number>(4);
+    const [activeGallery, setActiveGallery] = useState<number>(5);
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState(0);
     const router = useRouter();
@@ -107,12 +107,12 @@ const Hero = () => {
                 <section className="bg-teal-200/60 py-8 md:py-14">
                     <div className="max-w-6xl mx-auto px-4 sm:px-6">
                         <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-6 md:mb-10">
-                            <button
+                            {/* <button
                                 className={tabButtonClasses(activeGallery === 4)}
                                 onClick={() => setActiveGallery(4)}
                             >
                                 Women’s Health Camp
-                            </button>
+                            </button> */}
                             <button
                                 className={tabButtonClasses(activeGallery === 5)}
                                 onClick={() => setActiveGallery(5)}
