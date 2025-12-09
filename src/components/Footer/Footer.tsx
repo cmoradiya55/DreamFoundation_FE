@@ -106,9 +106,9 @@ export default function Footer() {
                     <p>
                         &copy; {new Date().getFullYear()} Dream Foundation. All Rights Reserved.
                     </p>
-                    <p className="text-sm text-white">
+                    {/* <p className="text-sm text-white">
                         Owned and managed by <strong>Grow Like Gujarati</strong>
-                    </p>
+                    </p> */}
                     <div className="flex flex-wrap justify-center gap-3 text-sm">
                         <Link href="/terms-and-conditions" className="text-teal-200 hover:text-teal-400 hover:underline transition-colors">
                             Terms & Conditions

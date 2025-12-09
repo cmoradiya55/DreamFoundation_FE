@@ -19,12 +19,12 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     default: "Dream Foundation",
-    template: " | Dream Foundation"
+    template: "Dream Foundation"
   },
   description: "Dream Foundation is dedicated to providing quality education and opportunities to help individuals achieve their dreams. Join our comprehensive programs and community initiatives.",
   authors: [{ name: "Dream Foundation" }],
-  // creator: "Dream Foundation",
-  // publisher: "Dream Foundation",
+  creator: "Dream Foundation",
+  publisher: "Dream Foundation",
   openGraph: {
     type: "website",
     locale: "en_US",

@@ -21,20 +21,14 @@ const HealthyBabyCompititionPage = () => (
                 <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl z-10"></div>
                 <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-br from-cyan-500/20 to-teal-500/20 rounded-full blur-3xl z-10"></div>
 
-                <div className="absolute top-4 right-4 z-20">
-                    <div className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-blue-200/50">
-                        <span className="text-blue-700 font-bold text-sm">Healthy Baby Competition</span>
-                    </div>
-                </div>
-
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-900/80 via-cyan-900/40 to-transparent z-10 p-6">
                     <h2 className="text-white text-2xl md:text-3xl font-bold mb-2">Celebrate Your Little One</h2>
                     <p className="text-cyan-100 text-sm md:text-base">Join us in celebrating healthy growth and development milestones</p>
                 </div>
 
-                <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px]">
+                <div className="hidden sm:block relative w-full h-[350px] md:h-[500px] lg:h-[600px]">
                     <Image
-                        src="/images/HealthyBabyCompitition.webp"
+                        src="/images/HealthyBabyCompitition.jpeg"
                         alt="Healthy Baby Competition"
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -8,125 +9,46 @@ const Hero = () => {
 
     const events = [
         {
-            id: 4,
-            title: "Women's Health Camp",
-            description: "Comprehensive health screening and wellness program for women",
-            route: "/womensHealthCamp",
-            gradient: "from-rose-500 to-pink-500",
-            iconType: "health"
-        },
-        {
-            id: 5,
-            title: "Healthy Baby Competition",
-            description: "Celebrating healthy growth and development milestones",
-            route: "/healthyBabyCompitition",
-            gradient: "from-blue-500 to-cyan-500",
-            iconType: "baby"
-        },
-        {
             id: 3,
             title: "Tiny Yatra",
-            description: "Fun-filled educational journey for young minds",
-            route: "/tinyYatra",
-            gradient: "from-emerald-500 to-teal-500",
-            iconType: "journey"
+            description: "A fun-filled, experiential journey that nurtures curiosity and early learning for young minds",
+            route: "/tiny-yatra",
+            gradient: "from-emerald-100 to-teal-100",
+            iconType: "journey",
+            logoSrc: "/logos/tinyYatra_logo.png",
+            logoWidth: 220,
+            logoHeight: 220
+        },
+        {
+            id: 6,
+            title: "Helix Academy",
+            description: "Focused coaching and personalized support for JEE Main & JEE Advanced",
+            route: "/helix-academy",
+            gradient: "from-teal-100 to-emerald-200",
+            iconType: "journey",
+            logoSrc: "/logos/helixAcadamy_logo.png",
+            logoWidth: 220,
+            logoHeight: 220
+        },
+        {
+            id: 7,
+            title: "Grow Like Gujarati",
+            description: "Stock market education and financial literacy programs",
+            route: "/grow-like-gujarati",
+            gradient: "from-teal-100 to-emerald-200",
+            iconType: "journey",
+            logoSrc: "/logos/gorwLikeGujarati_logo.png",
+            logoWidth: 320,
+            logoHeight: 320
         }
     ];
 
-    const renderEventIcon = (iconType: string) => {
-        const iconClasses = 'w-full h-full transition-transform duration-300 group-hover:scale-110';
-
-        if (iconType === "health") {
-            return (
-                <svg className={iconClasses} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="100" cy="100" r="85" fill="url(#healthGradient)" opacity="0.08"/>
-                    <path d="M100 50C90 50 85 55 85 65C85 70 87 75 95 85C95 85 100 90 100 95C100 90 105 85 105 85C113 75 115 70 115 65C115 55 110 50 100 50Z" fill="url(#healthGradient)"/>
-                    <ellipse cx="100" cy="115" rx="35" ry="45" fill="url(#healthGradient)" opacity="0.15"/>
-                    <path d="M75 105C75 105 80 110 85 110C90 110 95 105 95 105M105 105C105 105 110 110 115 110C120 110 125 105 125 105" stroke="url(#healthGradient)" strokeWidth="3" strokeLinecap="round"/>
-                    <circle cx="100" cy="125" r="22" fill="white" stroke="url(#healthGradient)" strokeWidth="3"/>
-                    <path d="M100 112V138M87 125H113" stroke="url(#healthGradient)" strokeWidth="5" strokeLinecap="round"/>
-                    <circle cx="70" cy="85" r="6" fill="url(#healthGradient)" opacity="0.4"/>
-                    <circle cx="130" cy="85" r="6" fill="url(#healthGradient)" opacity="0.4"/>
-                    <path d="M65 70C62 68 58 65 55 62M135 70C138 68 142 65 145 62" stroke="url(#healthGradient)" strokeWidth="2.5" strokeLinecap="round"/>
-                    <path d="M50 145C55 155 65 162 75 165M150 145C145 155 135 162 125 165" stroke="url(#healthGradient)" strokeWidth="2" strokeLinecap="round" opacity="0.3"/>
-                    <defs>
-                        <linearGradient id="healthGradient" x1="55" y1="50" x2="145" y2="165">
-                            <stop stopColor="#f43f5e"/>
-                            <stop offset="1" stopColor="#ec4899"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-            );
-        } else if (iconType === "baby") {
-            return (
-                <svg className={iconClasses} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="100" cy="90" r="40" fill="url(#babyGradient)"/>
-                    <ellipse cx="85" cy="85" rx="7" ry="10" fill="white"/>
-                    <ellipse cx="115" cy="85" rx="7" ry="10" fill="white"/>
-                    <circle cx="85" cy="87" r="4" fill="url(#babyGradient)"/>
-                    <circle cx="115" cy="87" r="4" fill="url(#babyGradient)"/>
-                    <path d="M85 100C85 100 90 108 100 108C110 108 115 100 115 100" stroke="white" strokeWidth="5" strokeLinecap="round"/>
-                    <circle cx="75" cy="95" r="5" fill="#fca5a5" opacity="0.6"/>
-                    <circle cx="125" cy="95" r="5" fill="#fca5a5" opacity="0.6"/>
-                    <path d="M65 70C65 70 55 58 48 58M135 70C135 70 145 58 152 58" stroke="url(#babyGradient)" strokeWidth="5" strokeLinecap="round"/>
-                    <ellipse cx="100" cy="150" rx="55" ry="30" fill="url(#babyGradient)" opacity="0.15"/>
-                    <path d="M60 140L75 147L62 154M140 140L125 147L138 154" stroke="url(#babyGradient)" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M85 130L95 140L90 150M115 130L105 140L110 150" stroke="url(#babyGradient)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" opacity="0.5"/>
-                    <path d="M70 42L75 35L72 48M130 42L125 35L128 48" fill="url(#babyGradient)"/>
-                    <path d="M55 100C60 95 70 92 80 95M145 100C140 95 130 92 120 95" stroke="url(#babyGradient)" strokeWidth="3" strokeLinecap="round"/>
-                    <circle cx="100" cy="45" r="8" fill="#fbbf24" opacity="0.8"/>
-                    <path d="M92 40L96 36L94 42M108 40L104 36L106 42M100 37L98 32L102 32Z" fill="#fbbf24"/>
-                    <defs>
-                        <linearGradient id="babyGradient" x1="48" y1="35" x2="152" y2="154">
-                            <stop stopColor="#3b82f6"/>
-                            <stop offset="1" stopColor="#06b6d4"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-            );
-        } else {
-            return (
-                <svg className={iconClasses} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="40" y="80" width="120" height="70" rx="12" fill="url(#journeyGradient)"/>
-                    <rect x="40" y="65" width="120" height="15" rx="8" fill="url(#journeyGradient)" opacity="0.7"/>
-                    <circle cx="65" cy="150" r="12" fill="#1f2937" stroke="url(#journeyGradient)" strokeWidth="3"/>
-                    <circle cx="135" cy="150" r="12" fill="#1f2937" stroke="url(#journeyGradient)" strokeWidth="3"/>
-                    <circle cx="65" cy="150" r="5" fill="white" opacity="0.4"/>
-                    <circle cx="135" cy="150" r="5" fill="white" opacity="0.4"/>
-                    <rect x="55" y="90" width="25" height="30" rx="4" fill="white" opacity="0.3"/>
-                    <rect x="90" y="90" width="25" height="30" rx="4" fill="white" opacity="0.3"/>
-                    <rect x="125" y="90" width="25" height="30" rx="4" fill="white" opacity="0.3"/>
-                    <path d="M60 95L62 100L58 100Z" fill="url(#journeyGradient)" opacity="0.6"/>
-                    <circle cx="67" cy="100" r="3" fill="url(#journeyGradient)"/>
-                    <path d="M95 95L97 100L93 100Z" fill="url(#journeyGradient)" opacity="0.6"/>
-                    <circle cx="102" cy="100" r="3" fill="url(#journeyGradient)"/>
-                    <path d="M130 95L132 100L128 100Z" fill="url(#journeyGradient)" opacity="0.6"/>
-                    <circle cx="137" cy="100" r="3" fill="url(#journeyGradient)"/>
-                    <rect x="50" y="125" width="100" height="20" rx="4" fill="url(#journeyGradient)" opacity="0.2"/>
-                    <path d="M55 135H75M80 135H100M105 135H145" stroke="url(#journeyGradient)" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M25 75C25 75 35 65 40 65M175 75C175 75 165 65 160 65" stroke="url(#journeyGradient)" strokeWidth="3" strokeLinecap="round"/>
-                    <circle cx="28" cy="78" r="6" fill="#fbbf24"/>
-                    <circle cx="172" cy="78" r="6" fill="#ef4444"/>
-                    <path d="M85 55L95 45L105 45L115 55L105 50L95 50Z" fill="url(#journeyGradient)" opacity="0.5"/>
-                    <circle cx="100" cy="48" r="8" fill="white" opacity="0.8"/>
-                    <path d="M95 48L100 43L105 48L100 52Z" fill="url(#journeyGradient)"/>
-                    <defs>
-                        <linearGradient id="journeyGradient" x1="40" y1="43" x2="160" y2="150">
-                            <stop stopColor="#10b981"/>
-                            <stop offset="1" stopColor="#14b8a6"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-            );
-        }
-    };
 
     return (
         <>
             <main className="min-h-screen flex flex-col">
-                <section className="relative bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 pt-16 pb-24 md:pt-24 md:pb-32 overflow-hidden">
-                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgxNywgOTQsIDg5LCAwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-40"></div>
-
+                <section className="relative bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 pt-4 pb-24 md:pt-8 md:pb-32 overflow-hidden">
+                    {/* <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgxNywgOTQsIDg5LCAwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-40"></div> */}
                     <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-16 animate-fade-in">
                             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#134e4a] mb-6 leading-tight">
@@ -135,43 +57,82 @@ const Hero = () => {
                                     Shaping Futures
                                 </span>
                             </h1>
-                            <p className="text-lg sm:text-xl text-[#0f766e] max-w-3xl mx-auto leading-relaxed">
+                            {/* <p className="text-lg sm:text-xl text-[#0f766e] max-w-3xl mx-auto leading-relaxed">
                                 Join our community initiatives and educational programs designed to create lasting positive impact
-                            </p>
+                            </p> */}
+                        </div>
+                        <div className="flex justify-center mb-12">
+                            <div className="relative flex flex-col items-center">
+                                {/* Parent node */}
+                                <div className="relative flex flex-col items-center">
+                                    <div className="relative w-[90px] h-[90px] sm:w-[120px] sm:h-[120px] rounded-full bg-[#032F2F] shadow-lg shadow-emerald-900/10 border-2 border-emerald-600/30 overflow-hidden">
+                                        <Image
+                                            src="/logos/dreamFoundation_logo.png"
+                                            alt="Dream Foundation Logo"
+                                            fill
+                                            className="object-contain p-4"
+                                        />
+                                    </div>
+                                    {/* Connector down */}
+                                    <div className="absolute left-1/2 top-full h-8 w-[3px] -translate-x-1/2 bg-emerald-600/30"></div>
+                                </div>
+
+                                <div className="relative mt-12 flex items-start justify-center gap-6 sm:gap-10">
+                                    <div className="absolute left-0 right-0 -top-[17px] h-[3px] bg-emerald-600/30"></div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                                        {events.map((event) => {
+                                            return (
+                                                <div key={event.id} className="relative">
+                                                    <div className="absolute -top-12 left-1/2 h-[50px] w-[3px] -translate-x-1/2 bg-emerald-600/30"></div>
+                                                    <div
+                                                        key={event.id}
+                                                        role="button"
+                                                        tabIndex={0}
+                                                        onClick={() => event.route && router.push(event.route)}
+                                                        onKeyDown={(e) => {
+                                                            if ((e.key === 'Enter' || e.key === ' ') && event.route) {
+                                                                e.preventDefault();
+                                                                router.push(event.route);
+                                                            }
+                                                        }}
+                                                        className="group relative bg-white rounded-2xl overflow-hidden transition-all duration-500 shadow-lg hover:shadow-xl hover:-translate-y-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                                    >
+                                                         <div className={`relative h-64 flex items-center justify-center bg-gradient-to-br ${event.gradient} bg-opacity-10 p-8`}>
+                                                             <div
+                                                                 className="relative flex items-center justify-center"
+                                                                 style={{
+                                                                     width: `${event.logoWidth ?? 120}px`,
+                                                                     height: `${event.logoHeight ?? event.logoWidth ?? 120}px`,
+                                                                 }}
+                                                             >
+                                                                 {event.logoSrc && (
+                                                                     <Image
+                                                                         src={event.logoSrc}
+                                                                         alt={`${event.title} Logo`}
+                                                                         fill
+                                                                         className="object-contain p-4"
+                                                                     />
+                                                                 )}
+                                                             </div>
+                                                         </div>
+                                                        <div className="p-6">
+                                                            <h3 className="text-xl font-bold text-[#134e4a] mb-2 group-hover:text-teal-600 transition-colors">
+                                                                {event.title}
+                                                            </h3>
+                                                            <p className="text-[#0f766e] text-sm leading-relaxed mb-2">
+                                                                {event.description}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                            {events.map((event) => {
-                                return (
-                                    <div
-                                        key={event.id}
-                                        className="group relative bg-white rounded-2xl overflow-hidden transition-all duration-500 shadow-lg hover:shadow-xl hover:-translate-y-2"
-                                    >
-                                        <div className={`relative h-64 flex items-center justify-center bg-gradient-to-br ${event.gradient} bg-opacity-10 p-8`}>
-                                            <div className="w-48 h-48">
-                                                {renderEventIcon(event.iconType)}
-                                            </div>
-                                        </div>
-                                        <div className="p-6">
-                                            <h3 className="text-xl font-bold text-[#134e4a] mb-2 group-hover:text-teal-600 transition-colors">
-                                                {event.title}
-                                            </h3>
-                                            <p className="text-[#0f766e] text-sm leading-relaxed mb-4">
-                                                {event.description}
-                                            </p>
-                                            {event.route && (
-                                                <button
-                                                    onClick={() => router.push(event.route)}
-                                                    className="w-full mt-2 bg-gradient-to-r from-[#042f2e] to-[#55a976] text-white font-semibold py-3 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
-                                                >
-                                                    Register Now
-                                                </button>
-                                            )}
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
 
                     </div>
                 </section>
