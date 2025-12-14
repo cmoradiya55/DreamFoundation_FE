@@ -26,9 +26,9 @@ const HealthyBabyCompititionPage = () => (
                     <p className="text-cyan-100 text-sm md:text-base">Join us in celebrating healthy growth and development milestones</p>
                 </div>
 
-                <div className="hidden sm:block relative w-full h-[350px] md:h-[500px] lg:h-[600px]">
+                <div className="relative w-full h-[200px] sm:h-[350px] md:h-[500px] lg:h-[600px]">
                     <Image
-                        src="/images/HealthyBabyCompitition.jpeg"
+                        src="/images/HealthyBabyCompitition.webp"
                         alt="Healthy Baby Competition"
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"

@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
-import { FaBars, FaTimes } from "react-icons/fa";
-import TicketModal from '../TicketModal/TicketModal';
+import { useRouter } from 'next/navigation';
 
 const navLinks = [
     { id: 1, title: 'TEACHER REGISTRATION', path: "/teacherRegistration" },
@@ -13,8 +11,8 @@ const navLinks = [
 
 export default function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const router = useRouter();
+    
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
@@ -67,7 +65,7 @@ export default function Header() {
     return (
         <header className="bg-[#042f2e] shadow-[0_2px_10px_rgba(4,47,46,0.25)] sticky top-0 z-[1000] w-full border-b border-white/10">
             <div className="max-w-7xl mx-auto px-4 sm:px-5 h-[80px] flex items-center">
-                    <div className="relative w-[50px] h-[50px] sm:w-[100px] sm:h-[65px] flex-shrink-0">
+                    <div className="relative w-[50px] h-[50px] sm:w-[100px] sm:h-[65px] flex-shrink-0" onClick={() => router.push('/')}>
                         <Image
                             src="/logos/dreamFoundation_logo.png"
                             alt="Dream Foundation Logo"

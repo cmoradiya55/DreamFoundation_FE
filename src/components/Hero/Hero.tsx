@@ -10,7 +10,7 @@ const Hero = () => {
     const events = [
         {
             id: 3,
-            title: "Tiny Yatra",
+            title: `Tiny  Yatra`,
             description: "A fun-filled, experiential journey that nurtures curiosity and early learning for young minds",
             route: "/tiny-yatra",
             gradient: "from-emerald-100 to-teal-100",
@@ -46,6 +46,24 @@ const Hero = () => {
 
     return (
         <>
+            {/* Scrolling Header for Healthy Baby Competition */}
+            <div className="relative bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white py-2 overflow-hidden">
+                <div className="flex animate-scroll whitespace-nowrap">
+                    {[...Array(4)].map((_, i) => (
+                        <Link 
+                            key={i}
+                            href="/healthyBabyCompitition"
+                            className="flex items-center gap-3 hover:opacity-90 transition-opacity px-8"
+                        >
+                            <span className="text-sm sm:text-base font-bold">🎉</span>
+                            <span className="text-sm sm:text-base font-semibold">Healthy Baby Competition - Register Now!</span>
+                            <span className="text-xs sm:text-sm opacity-90">Click to learn more</span>
+                            <span className="text-sm sm:text-base font-bold">🎉</span>
+                        </Link>
+                    ))}
+                </div>
+            </div>
+
             <main className="min-h-screen flex flex-col">
                 <section className="relative bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 pt-4 pb-24 md:pt-8 md:pb-32 overflow-hidden">
                     {/* <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgxNywgOTQsIDg5LCAwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-40"></div> */}
@@ -62,7 +80,7 @@ const Hero = () => {
                             </p> */}
                         </div>
                         <div className="flex justify-center mb-12">
-                            <div className="relative flex flex-col items-center">
+                            <div className="relative flex flex-col items-center w-full">
                                 {/* Parent node */}
                                 <div className="relative flex flex-col items-center">
                                     <div className="relative w-[90px] h-[90px] sm:w-[120px] sm:h-[120px] rounded-full bg-[#032F2F] shadow-lg shadow-emerald-900/10 border-2 border-emerald-600/30 overflow-hidden">
@@ -77,9 +95,10 @@ const Hero = () => {
                                     <div className="absolute left-1/2 top-full h-8 w-[3px] -translate-x-1/2 bg-emerald-600/30"></div>
                                 </div>
 
-                                <div className="relative mt-12 flex items-start justify-center gap-6 sm:gap-10">
-                                    <div className="absolute left-0 right-0 -top-[17px] h-[3px] bg-emerald-600/30"></div>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                                <div className="relative mt-12 w-full">
+                                    <div className="absolute left-1/2 right-0 -top-[17px] h-[3px] bg-emerald-600/30"></div>
+                                    <div className="absolute left-0 right-1/2 -top-[17px] h-[3px] bg-emerald-600/30"></div>
+                                    <div className="grid grid-cols-3 gap-6 md:gap-8 mt-8 max-w-7xl mx-auto">
                                         {events.map((event) => {
                                             return (
                                                 <div key={event.id} className="relative">
@@ -97,12 +116,14 @@ const Hero = () => {
                                                         }}
                                                         className="group relative bg-white rounded-2xl overflow-hidden transition-all duration-500 shadow-lg hover:shadow-xl hover:-translate-y-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500"
                                                     >
-                                                         <div className={`relative h-64 flex items-center justify-center bg-gradient-to-br ${event.gradient} bg-opacity-10 p-8`}>
+                                                         <div className={`relative h-32 sm:h-64 flex items-center justify-center bg-gradient-to-br ${event.gradient} bg-opacity-10 p-2 sm:p-4 md:p-6 lg:p-8 overflow-hidden`}>
                                                              <div
                                                                  className="relative flex items-center justify-center"
                                                                  style={{
-                                                                     width: `${event.logoWidth ?? 120}px`,
-                                                                     height: `${event.logoHeight ?? event.logoWidth ?? 120}px`,
+                                                                     width: event.logoWidth ? `${event.logoWidth}px` : '120px',
+                                                                     height: event.logoHeight ? `${event.logoHeight}px` : (event.logoWidth ? `${event.logoWidth}px` : '120px'),
+                                                                     maxWidth: '100%',
+                                                                     maxHeight: '100%',
                                                                  }}
                                                              >
                                                                  {event.logoSrc && (
@@ -110,16 +131,22 @@ const Hero = () => {
                                                                          src={event.logoSrc}
                                                                          alt={`${event.title} Logo`}
                                                                          fill
-                                                                         className="object-contain p-4"
+                                                                         className="object-contain p-1 sm:p-2 md:p-3 lg:p-4"
                                                                      />
                                                                  )}
                                                              </div>
                                                          </div>
-                                                        <div className="p-6">
-                                                            <h3 className="text-xl font-bold text-[#134e4a] mb-2 group-hover:text-teal-600 transition-colors">
-                                                                {event.title}
+                                                        <div className="p-4 sm:p-6">
+                                                            <h3 className="text-lg sm:text-xl font-bold text-[#134e4a] mb-2 group-hover:text-teal-600 transition-colors">
+                                                                {event.id === 3 ? (
+                                                                    <>
+                                                                        Tiny<br />Yatra
+                                                                    </>
+                                                                ) : (
+                                                                    event.title
+                                                                )}
                                                             </h3>
-                                                            <p className="text-[#0f766e] text-sm leading-relaxed mb-2">
+                                                            <p className="hidden sm:block text-[#0f766e] text-xs sm:text-sm leading-relaxed mb-2">
                                                                 {event.description}
                                                             </p>
                                                         </div>

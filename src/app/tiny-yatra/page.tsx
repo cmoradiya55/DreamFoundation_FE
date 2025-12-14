@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import TinyYartaComponent from "./TinyYartaComponent";
+import TinyYatraComponent from "./TinyYatraComponent";
 
 export const metadata: Metadata = {
   title: "Tiny Yatra | Dream Foundation",
@@ -22,5 +22,5 @@ export const metadata: Metadata = {
 };
 
 export default function TinyYatraPage() {
-  return <TinyYartaComponent />;
+  return <TinyYatraComponent />;
 }

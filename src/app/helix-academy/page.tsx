@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Helix Academy | Dream Foundation",
   description:
     "Focused coaching and personalized support for JEE Main & Advanced, NEET, and competitive exams with Helix Academy by Dream Foundation.",
+  keywords: ["Helix Academy", "JEE", "NEET", "coaching", "mock drills", "mentorship", "analytics", 'Best JEE Main coaching in rajkot', 'Best JEE Advanced coaching in rajkot', 'Best NEET coaching in rajkot', 'coaching', 'mock drills', 'mentorship', 'analytics'],
   openGraph: {
     title: "Helix Academy | Dream Foundation",
     description:

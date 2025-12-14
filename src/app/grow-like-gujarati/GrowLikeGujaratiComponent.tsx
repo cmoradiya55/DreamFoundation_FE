@@ -13,7 +13,7 @@ export default function GrowLikeGujaratiComponent() {
                 </span>
               </div>
               <div className="flex flex-col items-center gap-3">
-                <div className="relative w-[120px] h-[120px] rounded-full bg-white shadow-lg border border-emerald-200 overflow-hidden">
+                <div className="relative w-[120px] h-[120px] rounded-full bg-gradient-to-b from-emerald-100 to-teal-100 shadow-lg border border-emerald-200 overflow-hidden">
                   <Image
                     src="/logos/gorwLikeGujarati_logo.png"
                     alt="Grow Like Gujarati Logo"
@@ -21,11 +21,10 @@ export default function GrowLikeGujaratiComponent() {
                     className="object-contain p-3"
                   />
                 </div>
-                <h1 className="text-4xl sm:text-5xl font-bold text-[#0f4f4a]">Grow Like Gujarati</h1>
-                <p className="text-lg text-[#0f766e] max-w-2xl">
+                <h1 className="text-lg text-[#0f766e] max-w-2xl">
                   Stock market education and financial literacy programs designed to build confident,
                   long-term investors.
-                </p>
+                </h1>
               </div>
             </div>
     
@@ -78,16 +77,32 @@ export default function GrowLikeGujaratiComponent() {
                     </div>
                   </div>
                 </div>
-                <div className="mt-6">
+                {/* <div className="mt-6">
                   <Link
                     href="/studentRegistration"
                     className="inline-flex items-center justify-center rounded-full bg-white text-emerald-700 font-semibold px-6 py-3 hover:-translate-y-0.5 hover:shadow-lg transition-all"
                   >
                     Join a session
                   </Link>
-                </div>
+                </div> */}
               </div>
             </section>
+
+            <div className="mt-16 text-center bg-white/60 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-emerald-100">
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#134e4a] mb-4">
+                Ready to Build Your Financial Future?
+              </h2>
+              <p className="text-[#0f766e] mb-6 leading-relaxed">
+                Join Grow Like Gujarati and learn stock market investing with confidence. Start your journey towards financial literacy and wealth creation today.
+              </p>
+              <Link
+                href="https://growlikegujarati.co.in/"
+                target="_blank"
+                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-8 py-4 text-base font-semibold uppercase tracking-wider text-white shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:scale-105"
+              >
+                Join us today
+              </Link>
+            </div>
           </div>
         </main>
       );
