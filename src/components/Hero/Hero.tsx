@@ -1,10 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const Hero = () => {
 
@@ -43,267 +42,257 @@ const Hero = () => {
     const [lightboxIndex, setLightboxIndex] = useState(0);
     const router = useRouter();
 
-    // const helixImages = [
-    //     '/images/Helix/Helix_Academy_001.webp',
-    //     '/images/Helix/Helix_Academy_002.webp',
-    //     '/images/Helix/Helix_Academy_003.webp',
-    //     '/images/Helix/Helix_Academy_004.webp',
-    //     '/images/Helix/Helix_Academy_005.webp',
-    //     '/images/Helix/Helix_Academy_006.webp',
-    //     '/images/Helix/Helix_Academy_007.webp',
-    //     '/images/Helix/Helix_Academy_008.webp',
-    //     '/images/Helix/Helix_Academy_009.webp',
-    //     '/images/Helix/Helix_Academy_010.webp',
-    //     '/images/Helix/Helix_Academy_011.webp',
-    //     '/images/Helix/Helix_Academy_012.webp',
-    //     '/images/Helix/Helix_Academy_013.webp',
-    //     '/images/Helix/Helix_Academy_014.webp',
-    //     '/images/Helix/Helix_Academy_015.webp',
-    //     '/images/Helix/Helix_Academy_016.webp',
-    // ];
-
-    const tinyYatraImages = [
-        '/images/canva_2.webp',
-        '/images/canva_1.webp',
-        '/images/canva_4.webp',
-        '/images/canva_5.webp',
-        '/images/canva_6.webp',
+    const events = [
+        {
+            id: 3,
+            title: `Tiny  Yatra`,
+            description: "A fun-filled, experiential journey that nurtures curiosity and early learning for young minds",
+            route: "/tiny-yatra",
+            gradient: "from-emerald-100 to-teal-100",
+            iconType: "journey",
+            logoSrc: "/logos/tinyYatra_logo.png",
+            logoWidth: 220,
+            logoHeight: 220
+        },
+        {
+            id: 6,
+            title: "Helix Academy",
+            description: "Focused coaching and personalized support for JEE Main & JEE Advanced",
+            route: "/helix-academy",
+            gradient: "from-teal-100 to-emerald-200",
+            iconType: "journey",
+            logoSrc: "/logos/helixAcadamy_logo.png",
+            logoWidth: 220,
+            logoHeight: 220
+        },
+        {
+            id: 7,
+            title: "Grow Like Gujarati",
+            description: "Stock market education and financial literacy programs",
+            route: "/grow-like-gujarati",
+            gradient: "from-teal-100 to-emerald-200",
+            iconType: "journey",
+            logoSrc: "/logos/gorwLikeGujarati_logo.png",
+            logoWidth: 320,
+            logoHeight: 320
+        }
     ];
 
-    let currentGalleryImages: string[] = [];
-    if (activeGallery === 3) {
-        currentGalleryImages = tinyYatraImages;
-    } 
-
-    const openLightbox = (index: number) => {
-        setLightboxIndex(index);
-        setLightboxOpen(true);
-    };
-
-    const closeLightbox = () => {
-        setLightboxOpen(false);
-    };
-
-    const nextImage = () => {
-        setLightboxIndex((prev) => (prev + 1) % currentGalleryImages.length);
-    };
-
-    const prevImage = () => {
-        setLightboxIndex((prev) => (prev - 1 + currentGalleryImages.length) % currentGalleryImages.length);
-    };
-
-    const tabButtonClasses = (isActive: boolean) =>
-        `px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 rounded-full font-semibold text-sm sm:text-base lg:text-lg shadow-md transition-all duration-300 ${isActive
-            ? 'bg-gradient-to-r from-[#042f2e] to-[#55a976] text-white'
-            : 'bg-white text-zinc-700 hover:-translate-y-0.5 hover:shadow-lg'
-        }`;
-
-    const featureCardClasses =
-        'bg-white p-6 rounded-2xl shadow-[0_8px_25px_rgba(17,94,89,0.08)] border border-teal-400/10 text-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_12px_35px_rgba(17,94,89,0.15)]';
 
     return (
         <>
-            <main className="min-h-screen flex flex-col bg-teal-50">
-                <section className="bg-teal-200/60 py-8 md:py-14">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                        <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-6 md:mb-10">
-                            {/* <button
-                                className={tabButtonClasses(activeGallery === 4)}
-                                onClick={() => setActiveGallery(4)}
-                            >
-                                Women’s Health Camp
-                            </button> */}
-                            <button
-                                className={tabButtonClasses(activeGallery === 5)}
-                                onClick={() => setActiveGallery(5)}
-                            >
-                                Healthy Baby Compitition
-                            </button>
-                            {/* <button
-                                className={tabButtonClasses(activeGallery === 2)}
-                                onClick={() => setActiveGallery(2)}
-                            >
-                                Helix Academy
-                            </button> */}
-                            <button
-                                className={tabButtonClasses(activeGallery === 3)}
-                                onClick={() => setActiveGallery(3)}
-                            >
-                                Tiny Yatra
-                            </button>
+            {/* Scrolling Header for Healthy Baby Competition */}
+            <div className="relative bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white py-2 overflow-hidden">
+                <div className="flex animate-scroll whitespace-nowrap">
+                    {[...Array(4)].map((_, i) => (
+                        <Link 
+                            key={i}
+                            href="/healthyBabyCompitition"
+                            className="flex items-center gap-3 hover:opacity-90 transition-opacity px-8"
+                        >
+                            <span className="text-sm sm:text-base font-bold">🎉</span>
+                            <span className="text-sm sm:text-base font-semibold">Healthy Baby Competition - Register Now!</span>
+                            <span className="text-xs sm:text-sm opacity-90">Click to learn more</span>
+                            <span className="text-sm sm:text-base font-bold">🎉</span>
+                        </Link>
+                    ))}
+                </div>
+            </div>
 
+            <main className="min-h-screen flex flex-col">
+                <section className="relative bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 pt-4 pb-24 md:pt-8 md:pb-32 overflow-hidden">
+                    {/* <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgxNywgOTQsIDg5LCAwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-40"></div> */}
+                    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="text-center mb-16 animate-fade-in">
+                            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#134e4a] mb-6 leading-tight">
+                                Empowering Dreams,<br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#042f2e] to-[#55a976]">
+                                    Shaping Futures
+                                </span>
+                            </h1>
+                            {/* <p className="text-lg sm:text-xl text-[#0f766e] max-w-3xl mx-auto leading-relaxed">
+                                Join our community initiatives and educational programs designed to create lasting positive impact
+                            </p> */}
                         </div>
-
-                        {activeGallery === 4 ? (
-                            <div className="space-y-6">
-                                <div className="relative min-h-[420px] md:min-h-[520px] lg:min-h-[740px] overflow-hidden rounded-3xl">
-                                    <Image
-                                        src="/images/WomenHealthCamp/WomenHealthCamp.webp"
-                                        alt="Women's Health Camp attendees"
-                                        fill
-                                        className="object-contain"
-                                        sizes="(max-width: 1024px) 100vw, 960px"
-                                        priority
-                                    />
-                                </div>
-                                <div className="flex justify-center">
-                                    <button
-                                        className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#042f2e] to-[#55a976] px-8 py-4 text-sm font-semibold uppercase tracking-wide text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl mt-6"
-                                        onClick={() => router.push('/womensHealthCamp')}
-                                    >
-                                        Register for the Camp
-                                    </button>
-                                </div>
-                            </div>
-                        ) : activeGallery === 5 ? (
-                            <div className="space-y-6">
-                                <div className="relative min-h-[420px] md:min-h-[520px] lg:min-h-[740px] overflow-hidden rounded-3xl">
-                                    <Image
-                                        src="/images/HealthyBabyCompitition.webp"
-                                        alt="Healthy Baby Competition"
-                                        fill
-                                        className="object-contain"
-                                        sizes="(max-width: 1024px) 100vw, 960px"
-                                        priority
-                                    />
-                                </div>
-                                <div className="flex justify-center">
-                                    <button
-                                        className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#042f2e] to-[#55a976] px-8 py-4 text-sm font-semibold uppercase tracking-wide text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl mt-6"
-                                        onClick={() => router.push('/healthyBabyCompitition')}
-                                    >
-                                        Register for the Competition
-                                    </button>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="grid gap-4 sm:gap-6 lg:gap-8 grid-cols-[repeat(auto-fit,minmax(220px,1fr))]">
-                                {currentGalleryImages.map((image, index) => (
-                                    <div
-                                        key={image}
-                                        className={`relative overflow-hidden rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] cursor-pointer transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(0,0,0,0.2)] ${activeGallery === 3 ? 'aspect-[3/3]' : 'aspect-[4/3]'
-                                            }`}
-                                        onClick={() => openLightbox(index)}
-                                    >
+                        <div className="flex justify-center mb-12">
+                            <div className="relative flex flex-col items-center w-full">
+                                {/* Parent node */}
+                                <div className="relative flex flex-col items-center">
+                                    <div className="relative w-[90px] h-[90px] sm:w-[120px] sm:h-[120px] rounded-full bg-[#032F2F] shadow-lg shadow-emerald-900/10 border-2 border-emerald-600/30 overflow-hidden">
                                         <Image
-                                            src={image}
-                                            alt={`${activeGallery === 2 ? 'Helix Academy' : 'Tiny Yatra'} image ${index + 1}`}
+                                            src="/logos/dreamFoundation_logo.png"
+                                            alt="Dream Foundation Logo"
                                             fill
-                                            className="object-cover transition-transform duration-300 hover:scale-105"
+                                            className="object-contain p-4"
                                         />
                                     </div>
-                                ))}
+                                    {/* Connector down */}
+                                    <div className="absolute left-1/2 top-full h-8 w-[3px] -translate-x-1/2 bg-emerald-600/30"></div>
+                                </div>
+
+                                <div className="relative mt-12 w-full">
+                                    <div className="absolute left-1/2 right-0 -top-[17px] h-[3px] bg-emerald-600/30"></div>
+                                    <div className="absolute left-0 right-1/2 -top-[17px] h-[3px] bg-emerald-600/30"></div>
+                                    <div className="grid grid-cols-3 gap-6 md:gap-8 mt-8 max-w-7xl mx-auto">
+                                        {events.map((event) => {
+                                            return (
+                                                <div key={event.id} className="relative">
+                                                    <div className="absolute -top-12 left-1/2 h-[50px] w-[3px] -translate-x-1/2 bg-emerald-600/30"></div>
+                                                    <div
+                                                        key={event.id}
+                                                        role="button"
+                                                        tabIndex={0}
+                                                        onClick={() => event.route && router.push(event.route)}
+                                                        onKeyDown={(e) => {
+                                                            if ((e.key === 'Enter' || e.key === ' ') && event.route) {
+                                                                e.preventDefault();
+                                                                router.push(event.route);
+                                                            }
+                                                        }}
+                                                        className="group relative bg-white rounded-2xl overflow-hidden transition-all duration-500 shadow-lg hover:shadow-xl hover:-translate-y-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                                    >
+                                                         <div className={`relative h-32 sm:h-64 flex items-center justify-center bg-gradient-to-br ${event.gradient} bg-opacity-10 p-2 sm:p-4 md:p-6 lg:p-8 overflow-hidden`}>
+                                                             <div
+                                                                 className="relative flex items-center justify-center"
+                                                                 style={{
+                                                                     width: event.logoWidth ? `${event.logoWidth}px` : '120px',
+                                                                     height: event.logoHeight ? `${event.logoHeight}px` : (event.logoWidth ? `${event.logoWidth}px` : '120px'),
+                                                                     maxWidth: '100%',
+                                                                     maxHeight: '100%',
+                                                                 }}
+                                                             >
+                                                                 {event.logoSrc && (
+                                                                     <Image
+                                                                         src={event.logoSrc}
+                                                                         alt={`${event.title} Logo`}
+                                                                         fill
+                                                                         className="object-contain p-1 sm:p-2 md:p-3 lg:p-4"
+                                                                     />
+                                                                 )}
+                                                             </div>
+                                                         </div>
+                                                        <div className="p-4 sm:p-6">
+                                                            <h3 className="text-lg sm:text-xl font-bold text-[#134e4a] mb-2 group-hover:text-teal-600 transition-colors">
+                                                                {
+                                                                    event.title
+                                                                }
+                                                            </h3>
+                                                            <p className="hidden sm:block text-[#0f766e] text-xs sm:text-sm leading-relaxed mb-2">
+                                                                {event.description}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+
+                                </div>
                             </div>
-                        )}
+                        </div>
+
+
                     </div>
                 </section>
 
-                <section className="py-10 md:py-20 bg-teal-50">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-12 md:space-y-16">
-                        <div className="text-center">
-                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#134e4a] mb-4 sm:mb-6">About Dream Foundation</h2>
-                            <p className="text-base text-[#0f766e] max-w-3xl mx-auto leading-1.3 sm:leading-1.5 md:leading-6 lg:leading-relaxed">
-                                Dream Foundation is dedicated to providing quality education and opportunities
-                                to help individuals achieve their dreams. Through our comprehensive programs
-                                and community initiatives, we strive to create a positive impact on society.
-                            </p>
-                            <div className="grid gap-4 sm:gap-6 lg:gap-8 mt-8 md:mt-10 md:grid-cols-3">
-                                <div className={featureCardClasses}>
-                                    <h3 className="text-lg sm:text-xl font-semibold text-[#115e59] mb-2 sm:mb-3">Quality Education</h3>
-                                    <p className="text-sm sm:text-base text-[#0f766e] leading-1.3 sm:leading-1.5 md:leading-6 lg:leading-relaxed">
-                                        Comprehensive educational programs designed to meet diverse learning needs.
-                                    </p>
-                                </div>
-                                <div className={featureCardClasses}>
-                                    <h3 className="text-lg sm:text-xl font-semibold text-[#115e59] mb-2 sm:mb-3">Community Events</h3>
-                                    <p className="text-sm sm:text-base text-[#0f766e] leading-1.3 sm:leading-1.5 md:leading-6 lg:leading-relaxed">
-                                        Regular events and workshops to engage and empower our community.
-                                    </p>
-                                </div>
-                                <div className={featureCardClasses}>
-                                    <h3 className="text-lg sm:text-xl font-semibold text-[#115e59] mb-2 sm:mb-3">Career Development</h3>
-                                    <p className="text-sm sm:text-base text-[#0f766e] leading-1.3 sm:leading-1.5 md:leading-6 lg:leading-relaxed">
-                                        Professional development opportunities to help individuals advance their careers.
-                                    </p>
-                                </div>
+                <section className="py-16 md:py-24 bg-white">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="text-center mb-16">
+                            <div className="inline-block px-4 py-2 bg-teal-100 rounded-full mb-4">
+                                <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">About Us</span>
                             </div>
-                        </div>
-
-                        <div className="text-center">
-                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#134e4a] mb-4 sm:mb-6">Our Vision</h2>
-                            <p className="text-base text-[#0f766e] max-w-4xl mx-auto leading-1.3 sm:leading-1.5 md:leading-6 lg:leading-relaxed">
-                                Today&apos;s students are going to face the challenges of life after 15–20 years. After 15–20 years our world is going to be very different with different values, different technology. We need to shape our kids for upcoming world and its challenges. Don&apos;t limit a child to your own learning, for he was born in another time. According to Vedic traditions the purpose of human life is Dharma, Artha, Kama and Moksha.
+                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#134e4a] mb-6">Dream Foundation</h2>
+                            <p className="text-lg text-[#0f766e] max-w-3xl mx-auto leading-relaxed">
+                                Dedicated to providing quality education and opportunities to help individuals achieve their dreams through comprehensive programs and community initiatives.
                             </p>
                         </div>
 
-                        <div className="text-center">
-                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#134e4a] mb-4 sm:mb-6">Our Mission</h2>
-                            <p className="text-base text-[#0f766e] max-w-4xl mx-auto leading-1.3 sm:leading-1.5 md:leading-6 lg:leading-relaxed">
-                                The illiterate of the future will not be the one who cannot read. It will be the person who does not know how to learn. The foundation of every country is the education of its youth. Our vision is to prepare true global citizens for the next generation who can cope with both the challenges of outside world and evolution of consciousness in themselves.
-                            </p>
+                        <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
+                            <div className="group relative bg-gradient-to-br from-teal-50 to-emerald-50 p-8 rounded-2xl border border-teal-200/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+                                <div className="w-14 h-14 bg-gradient-to-br from-[#042f2e] to-[#55a976] rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                                    <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-bold text-[#115e59] mb-3">Quality Education</h3>
+                                <p className="text-[#0f766e] leading-relaxed">
+                                    Comprehensive educational programs designed to meet diverse learning needs and foster excellence.
+                                </p>
+                            </div>
+
+                            <div className="group relative bg-gradient-to-br from-cyan-50 to-blue-50 p-8 rounded-2xl border border-cyan-200/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+                                <div className="w-14 h-14 bg-gradient-to-br from-[#042f2e] to-[#55a976] rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                                    <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-bold text-[#115e59] mb-3">Community Events</h3>
+                                <p className="text-[#0f766e] leading-relaxed">
+                                    Regular events and workshops designed to engage, inspire, and empower our vibrant community.
+                                </p>
+                            </div>
+
+                            <div className="group relative bg-gradient-to-br from-emerald-50 to-teal-50 p-8 rounded-2xl border border-emerald-200/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+                                <div className="w-14 h-14 bg-gradient-to-br from-[#042f2e] to-[#55a976] rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                                    <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-bold text-[#115e59] mb-3">Career Development</h3>
+                                <p className="text-[#0f766e] leading-relaxed">
+                                    Professional development opportunities to help individuals advance and excel in their careers.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                <section className="py-12 md:py-16 bg-teal-600 text-white text-center">
-                    <div className="max-w-4xl mx-auto px-4 sm:px-5">
-                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">Ready to Start Your Journey?</h2>
-                        <p className="text-base mb-6 sm:mb-8 leading-1.3 sm:leading-1.5 md:leading-6 lg:leading-relaxed">
+                <section className="py-16 md:py-24 bg-gradient-to-br from-teal-600 via-teal-700 to-emerald-700 text-white relative overflow-hidden">
+                    <div className="absolute inset-0 opacity-10">
+                        <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+                        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+                    </div>
+
+                    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="grid md:grid-cols-2 gap-12 md:gap-16">
+                            <div className="space-y-6">
+                                <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full">
+                                    <span className="text-white font-semibold text-sm uppercase tracking-wider">Our Vision</span>
+                                </div>
+                                <h2 className="text-3xl sm:text-4xl font-bold leading-tight">Preparing for Tomorrow&apos;s World</h2>
+                                <p className="text-teal-50 text-lg leading-relaxed">
+                                    Today&apos;s students are going to face the challenges of life after 15–20 years. After 15–20 years our world is going to be very different with different values, different technology. We need to shape our kids for upcoming world and its challenges. Don&apos;t limit a child to your own learning, for he was born in another time. According to Vedic traditions the purpose of human life is Dharma, Artha, Kama and Moksha.
+                                </p>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full">
+                                    <span className="text-white font-semibold text-sm uppercase tracking-wider">Our Mission</span>
+                                </div>
+                                <h2 className="text-3xl sm:text-4xl font-bold leading-tight">Building Global Citizens</h2>
+                                <p className="text-teal-50 text-lg leading-relaxed">
+                                    The illiterate of the future will not be the one who cannot read. It will be the person who does not know how to learn. The foundation of every country is the education of its youth. Our vision is to prepare true global citizens for the next generation who can cope with both the challenges of outside world and evolution of consciousness in themselves.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="py-16 md:py-20 bg-gradient-to-br from-teal-50 to-emerald-50">
+                    <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#134e4a] mb-6">Ready to Start Your Journey?</h2>
+                        <p className="text-lg text-[#0f766e] mb-10 leading-relaxed">
                             Join thousands of students and professionals who have transformed their lives with Dream Foundation.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                            <Link
-                                href="/studentRegistration"
-                                className="inline-flex items-center justify-center rounded-full bg-[#115e59] border-2 border-[#115e59] px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-wide transition-all duration-300 hover:bg-[#042f2e] hover:border-[#042f2e] hover:-translate-y-0.5"
-                            >
-                                Apply for Admission
-                            </Link>
-                        </div>
+                        <Link
+                            href="/studentRegistration"
+                            className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#042f2e] to-[#55a976] px-10 py-4 text-base font-semibold uppercase tracking-wider text-white shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:scale-105"
+                        >
+                            Apply for Admission
+                        </Link>
                     </div>
                 </section>
             </main>
-            {lightboxOpen && (
-                <div
-                    className="fixed inset-0 bg-black/95 z-[9999] flex items-center justify-center p-4 sm:p-6"
-                    onClick={closeLightbox}
-                >
-                    <button
-                        className="fixed top-4 right-4 sm:top-6 sm:right-6 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md flex items-center justify-center transition-transform duration-200 hover:scale-105 hover:bg-white/20"
-                        onClick={closeLightbox}
-                    >
-                        <X size={28} />
-                    </button>
-                    <button
-                        className="hidden sm:flex absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md items-center justify-center hover:scale-105 transition"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            prevImage();
-                        }}
-                    >
-                        <ChevronLeft size={32} />
-                    </button>
-                    <button
-                        className="hidden sm:flex absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md items-center justify-center hover:scale-105 transition"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            nextImage();
-                        }}
-                    >
-                        <ChevronRight size={32} />
-                    </button>
-                    <div
-                        className="relative w-full max-w-5xl aspect-video"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <Image
-                            src={currentGalleryImages[lightboxIndex]}
-                            alt={`${activeGallery === 2 ? 'Helix Academy' : 'Tiny Yatra'} image ${lightboxIndex + 1}`}
-                            fill
-                            className="object-contain"
-                        />
-                    </div>
-                </div>
-            )}
         </>
     );
 };

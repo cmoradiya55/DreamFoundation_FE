@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.76.1",
+    "@vercel/analytics": "^1.6.1",
     "@vercel/speed-insights": "^1.2.0",
     "axios": "^1.13.2",
     "bcryptjs": "^3.0.2",
