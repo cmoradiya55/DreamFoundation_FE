@@ -3,8 +3,43 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const Hero = () => {
+
+
+    // const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    // const slideImages = [
+    //     { src: '/images/canva_2.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/canva_1.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/canva_4.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/canva_5.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/canva_6.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_001.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_002.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_003.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_004.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_005.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_006.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_007.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_008.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_009.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_010.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_011.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_012.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_013.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_014.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_015.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    //     { src: '/images/Helix/Helix_Academy_016.webp', fallback: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    // ];
+
+    // Auto slide functionality with setTimeout
+
+
+    const [activeGallery, setActiveGallery] = useState<number>(5);
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxIndex, setLightboxIndex] = useState(0);
     const router = useRouter();
 
     const events = [
@@ -138,13 +173,9 @@ const Hero = () => {
                                                          </div>
                                                         <div className="p-4 sm:p-6">
                                                             <h3 className="text-lg sm:text-xl font-bold text-[#134e4a] mb-2 group-hover:text-teal-600 transition-colors">
-                                                                {event.id === 3 ? (
-                                                                    <>
-                                                                        Tiny<br />Yatra
-                                                                    </>
-                                                                ) : (
+                                                                {
                                                                     event.title
-                                                                )}
+                                                                }
                                                             </h3>
                                                             <p className="hidden sm:block text-[#0f766e] text-xs sm:text-sm leading-relaxed mb-2">
                                                                 {event.description}
