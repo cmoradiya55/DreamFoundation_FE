@@ -13,7 +13,7 @@ export default function GrowLikeGujaratiComponent() {
                 </span>
               </div>
               <div className="flex flex-col items-center gap-3">
-                <div className="relative w-[120px] h-[120px] rounded-full bg-gradient-to-b from-emerald-100 to-teal-100 shadow-lg border border-emerald-200 overflow-hidden">
+                <div className="relative w-[120px] h-[120px] rounded-full bg-[#000000e0] border border-emerald-200 overflow-hidden">
                   <Image
                     src="/logos/gorwLikeGujarati_logo.png"
                     alt="Grow Like Gujarati Logo"

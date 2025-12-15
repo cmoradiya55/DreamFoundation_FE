@@ -26,15 +26,36 @@ export const metadata: Metadata = {
   authors: [{ name: "Dream Foundation" }],
   creator: "Dream Foundation",
   publisher: "Dream Foundation",
+  icons: {
+    icon: [
+      { url: "/logos/dreamFoundation_logo.png", type: "image/png" },
+      { url: "/logos/dreamFoundation_logo2.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/logos/dreamFoundation_logo.png", type: "image/png" },
+    ],
+    shortcut: "/logos/dreamFoundation_logo.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "http://dreamfoundation.in/",
+    url: "https://dreamfoundation.in/",
     siteName: "Dream Foundation",
     title: "Dream Foundation - Education & Opportunities",
     description: "Dream Foundation is dedicated to providing quality education and opportunities to help individuals achieve their dreams.",
+    images: [
+      {
+        url: "https://dreamfoundation.in/logos/dreamFoundation_logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Dream Foundation Logo",
+      },
+    ],
   },
-
+  twitter: {
+    card: "summary_large_image",
+    images: ["https://dreamfoundation.in/logos/dreamFoundation_logo.png"],
+  },
   robots: {
     index: true,
     follow: true,
