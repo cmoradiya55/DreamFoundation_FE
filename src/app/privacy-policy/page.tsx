@@ -11,7 +11,7 @@ export default function PrivacyPolicy() {
           <section className="bg-gray-50 rounded-lg p-6 mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Entity Information</h2>
             <ul className="space-y-2 text-sm">
-              <li><strong>Entity Name:</strong> Dream Foundation (Owned by Grow Like Gujarati)</li>
+              <li><strong>Entity Name:</strong> Dream Foundation</li>
               <li><strong>Registered Address:</strong> Panchayat Chowk, University Road, Rajkot – 360005</li>
               <li><strong>Contact Information:</strong> +91 63561 79699 | tinyyatra99@gmail.com</li>
               <li><strong>Website:</strong> www.dreamfoundation.in</li>
@@ -21,8 +21,7 @@ export default function PrivacyPolicy() {
           <section>
             <p className="mb-6">
               <strong>Dream Foundation</strong> (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) values the privacy of its users. This Privacy Policy explains how we collect,
-              use, disclose, and protect your personal data through our Platform www.dreamfoundation.in. The Platform is legally
-              operated under the ownership of <strong>Grow Like Gujarati</strong>, which manages all data and payment gateway operations.
+              use, disclose, and protect your personal data through our Platform www.dreamfoundation.in.
             </p>
 
             <ol className="list-decimal list-inside space-y-5 ml-2">
