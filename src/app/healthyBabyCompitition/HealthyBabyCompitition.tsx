@@ -492,6 +492,25 @@ const HealthyBabyCompitition = () => {
                         requiredMessage="You must accept the consent form to proceed"
                     />
 
+                    {/* Registration Fee Notice */}
+                    <div className="bg-gradient-to-r from-amber-50 via-yellow-50 to-amber-50 border-2 border-amber-200 rounded-2xl p-5 sm:p-6 shadow-sm">
+                        <div className="flex items-start gap-3">
+                            <div className="flex-shrink-0 mt-0.5">
+                                <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center">
+                                    <span className="text-white font-bold text-lg">₹</span>
+                                </div>
+                            </div>
+                            <div className="flex-1 space-y-2">
+                                <h3 className="text-base sm:text-lg font-bold text-amber-900">
+                                    Registration Fee Information
+                                </h3>
+                                <p className="text-sm sm:text-base text-amber-800 leading-relaxed">
+                                    A registration fee of <strong className="font-semibold text-amber-900">₹500</strong> is applicable for this competition. Our team will contact you shortly after your registration submission to guide you through the payment process and provide further details.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* Submit Button Section */}
                     <div className="space-y-4 text-center">
                         <button
