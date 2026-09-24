@@ -34,6 +34,7 @@ import {
 } from './StudentRegistrationGraphQL';
 import { GraphQLClientError } from '@/lib/graphqlClient';
 import DocumentsRequiredComponent from '../../components/DocumentsRequiredComponent/DocumentsRequiredComponent';
+import Image from 'next/image';
 
 export type StudentDocument = DocumentUploadInput;
 
@@ -202,7 +203,7 @@ const buildStudentRegistrationInput = (
     feesAcknowledged: data.feesAcknowledged,
     declarationAccepted: data.declarationAccepted,
     termsAccepted: data.termsAccepted,
-    documents: Array.isArray(data.documents) && data.documents.length > 0 && typeof data.documents[0] === 'object' 
+    documents: Array.isArray(data.documents) && data.documents.length > 0 && typeof data.documents[0] === 'object'
       ? (data.documents as unknown as StudentDocument[])
       : [],
   };
@@ -335,10 +336,10 @@ const StudentRegistrationComponent: React.FC = () => {
   }, [watch]);
 
   // Helper function to update both form and local state
-  const updateFormField = (name: keyof StudentRegistrationFormData, value: string | boolean | StudentDocument[] | null | undefined) => {
-    setValue(name, value ?? undefined);
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+  // const updateFormField = (name: keyof StudentRegistrationFormData, value: string | boolean | StudentDocument[] | null | undefined) => {
+  //   setValue(name, value ?? undefined);
+  //   setFormData(prev => ({ ...prev, [name]: value }));
+  // };
 
   const onSubmit = async (data: StudentRegistrationFormData, event?: React.BaseSyntheticEvent) => {
     event?.preventDefault();
@@ -358,8 +359,8 @@ const StudentRegistrationComponent: React.FC = () => {
           const backData = aadharData && typeof aadharData === 'object' && 'back' in aadharData ? aadharData.back : null;
 
           if (frontData) {
-            const fileUrl = typeof frontData === 'object' && frontData !== null && 'url' in frontData 
-              ? (frontData as { file: File; url: string }).url 
+            const fileUrl = typeof frontData === 'object' && frontData !== null && 'url' in frontData
+              ? (frontData as { file: File; url: string }).url
               : null;
             if (fileUrl) {
               // Convert to camelCase: childAadharCard -> childAadharCardFront, parentAadharCard -> parentAadharCardFront
@@ -372,8 +373,8 @@ const StudentRegistrationComponent: React.FC = () => {
           }
 
           if (backData) {
-            const fileUrl = typeof backData === 'object' && backData !== null && 'url' in backData 
-              ? (backData as { file: File; url: string }).url 
+            const fileUrl = typeof backData === 'object' && backData !== null && 'url' in backData
+              ? (backData as { file: File; url: string }).url
               : null;
             if (fileUrl) {
               // Convert to camelCase: childAadharCard -> childAadharCardBack, parentAadharCard -> parentAadharCardBack
@@ -389,8 +390,8 @@ const StudentRegistrationComponent: React.FC = () => {
           const docTypeStr = docType as string;
           const fileData = documentFiles[docTypeStr];
           if (fileData) {
-            const fileUrl = typeof fileData === 'object' && fileData !== null && 'url' in fileData 
-              ? (fileData as { file: File; url: string }).url 
+            const fileUrl = typeof fileData === 'object' && fileData !== null && 'url' in fileData
+              ? (fileData as { file: File; url: string }).url
               : null;
             if (fileUrl) {
               documentsPayload.push({
@@ -441,8 +442,7 @@ const StudentRegistrationComponent: React.FC = () => {
       const mutationInput = buildStudentRegistrationInput(submissionData);
       const result = await CreateStudentRegistrationMutation(mutationInput);
       alert(
-        `Admission registration submitted successfully! ${
-          result.registrationNumber ? `Registration No: ${result.registrationNumber}` : ''
+        `Admission registration submitted successfully! ${result.registrationNumber ? `Registration No: ${result.registrationNumber}` : ''
         }`,
       );
       reset();
@@ -491,6 +491,7 @@ const StudentRegistrationComponent: React.FC = () => {
           {/* Personal Information Section */}
           <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
 
+            {/* Personal Information Header Section */}
             <div className="bg-gradient-to-r from-teal-700 to-emerald-700 px-4 sm:px-5 md:px-6 py-3 sm:py-4 md:py-5">
               <div className="text-lg sm:text-xl md:text-2xl text-white flex items-center gap-2 sm:gap-3 p-2 sm:p-3">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
@@ -503,6 +504,7 @@ const StudentRegistrationComponent: React.FC = () => {
               </div>
             </div>
 
+            {/* Personal Information Form Section */}
             <div className="p-4 sm:p-5 md:p-6 lg:p-8 space-y-4 sm:space-y-5 md:space-y-6">
 
               {/* Child's Information Section */}
@@ -901,7 +903,7 @@ const StudentRegistrationComponent: React.FC = () => {
                 ]}
                 title="Documents Required"
               />
-  
+
               {/* Declaration by Parent / Guardian */}
               <div>
                 <AcknowledgmentCheckbox
@@ -942,6 +944,76 @@ const StudentRegistrationComponent: React.FC = () => {
 
             </div>
 
+          </div>
+
+          {/* Payment Section */}
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl border border-gray-100 overflow-hidden px-4 sm:px-5 md:px-6 py-3 sm:py-4 md:py-5">
+            <h2 className="text-lg font-bold text-teal-600 mb-1.5 flex items-center gap-2">
+              <span>• Payment</span>
+              {/* <span className="text-xs font-normal text-gray-400">(Step 6)</span> */}
+            </h2>
+            <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center md:items-start py-2">
+              {/* Left: Bank Details */}
+              <div className="flex-1 w-full max-w-md space-y-6">
+
+                <div className="bg-gradient-to-r from-teal-50 to-emerald-50 rounded-lg p-4 border border-teal-100 shadow-sm">
+                  <h3 className="text-base font-semibold text-teal-700 mb-2 flex items-center gap-2">
+                    <span>IMPS / NEFT / RTGS Details</span>
+                  </h3>
+                  <div className="space-y-1 text-sm text-gray-700">
+                    <div className="flex justify-between">
+                      <span className="font-medium">Account Name:</span>
+                      <span className="text-right">GROW LIKE GUJARATI</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-medium">Account Number:</span>
+                      <span className="text-right select-all">50200107455252</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-medium">Bank Name:</span>
+                      <span className="text-right">HDFC Bank</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-medium">IFSC Code:</span>
+                      <span className="text-right select-all">HDFC0004776</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 text-xs text-gray-500">
+                    <span>Use above details for IMPS, NEFT, or RTGS transfer.</span>
+                  </div>
+                </div>
+
+                <div className='bg-gradient-to-r from-teal-50 to-emerald-50 rounded-lg p-4 border border-teal-100 shadow-sm'>
+                  <p className="text-sm text-gray-600">
+                    <span className="font-semibold text-teal-700">Important:</span> After making the payment, please take a screenshot or photo of the payment confirmation/receipt and send in WhatsApp to this number.
+                  </p>
+                  <p className="text-sm text-gray-700 mt-2">
+                    <span className="text-teal-700 font-semibold">Number: </span>
+                    <span className='text-black font-bold'>+91-6356179699</span>
+                  </p>
+                </div>
+
+              </div>
+
+              {/* Right: QR Scanner & Screenshot */}
+              <div className="flex-1 w-full max-w-xs flex flex-col items-center gap-2">
+                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg p-4 border border-emerald-100 shadow-sm flex flex-col items-center">
+                  <h3 className="text-base font-semibold text-emerald-700 mb-2">Scan & Pay (UPI)</h3>
+                  <div className="bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden border border-gray-200 mb-2">
+                    <Image
+                      height={150}
+                      width={150}
+                      src="/images/PaymentScanner.webp"
+                      alt="UPI QR Code"
+                      className="object-contain w-full h-full"
+                    />
+                  </div>
+                  <div className="text-xs text-gray-600 mb-1">UPI ID: <span className="font-medium select-all">9974230830.1@hdfc</span></div>
+                  <div className="text-xs text-gray-500">Scan QR to pay via any UPI app</div>
+                </div>
+              </div>
+
+            </div>
           </div>
 
           {/* Submit Button */}
